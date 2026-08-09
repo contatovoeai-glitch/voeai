@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clientes — VoeAI</title>
+<meta name="description" content="Histórias de quem viajou com a VoeAI: rotas, economia obtida e acompanhamento da viagem do contrato à emissão.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23050505%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L20.6%2020.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%235574FF%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Clientes — VoeAI">
+<meta property="og:description" content="Histórias de quem viajou com a VoeAI: rotas, economia obtida e acompanhamento da viagem do contrato à emissão.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VoeAI">
+<meta property="og:image" content="uploads/cli-cta.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:#050505; color:#F4F4F1; font-family:'Schibsted Grotesk','Helvetica Neue',Helvetica,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:#5574FF; text-decoration:none; }
+  a:hover { color:#7C93FF; }
+  ::selection { background:rgba(85,116,255,.28); }
+  :focus-visible { outline:2px solid #5574FF; outline-offset:3px; }
+  image-slot { --slot-radius:0; }
+  /* slot com src ja preenchido pelo autor: sem anel tracejado de drop-zone */
+  image-slot[src]::part(ring) { display:none !important; }
+  [data-menu-btn] { display:none; }
+  @media (max-width:1024px) { header nav { display:none !important; } [data-menu-btn] { display:grid !important; } }
+  @media (max-width:600px) {
+    [data-hdr-login] { display:none !important; }
+    [data-hdr-cta] { padding:0 13px !important; font-size:10px !important; letter-spacing:.08em !important; }
+    header > div:nth-of-type(2) { gap:12px !important; }
+  }
+  @media (max-width:1080px) {
+    [data-g12] { grid-template-columns:1fr !important; }
+    [data-g12] > * { grid-column:auto !important; }
+    [data-split] { grid-template-columns:1fr !important; }
+    [data-story] { grid-template-columns:1fr !important; }
+  }
+  [data-split] > *, [data-story] > *, [data-two] > *, [data-g12] > *, [data-row] > * { min-width:0; }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } html { scroll-behavior:auto; } }
+  /* === grade de blocos (gerado) ===
+     auto-fit deixava o browser escolher as colunas e sobrava linha orfa
+     com borda solta. Colunas explicitas por faixa; divisor a esquerda,
+     removido no primeiro de cada linha, e respiro para o texto nao colar. */
+  [data-cols] > * { min-width:0; }
+  [data-cols][data-div] > * { border-right:0 !important; padding-left:clamp(18px,1.7vw,34px) !important; }
+  [data-div="d"] > * { border-left:1px solid rgba(255,255,255,.08) !important; }
+  [data-div="l"] > * { border-left:1px solid rgba(5,5,5,.12) !important; }
+  @media (min-width:1240px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(5,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(5n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(6,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(6n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(7,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(7n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:900px) and (max-width:1239px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:600px) and (max-width:899px) {
+    [data-cols="3"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (max-width:599px) {
+    [data-cols="3"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  /* === fim grade de blocos === */
+</style>
+</helmet>
+
+<div style="position:relative;background:#050505">
+  <dc-import name="Header" active="clientes" hint-size="100%,76px"></dc-import>
+
+  <section style="position:relative;padding:clamp(150px,18vh,220px) clamp(20px,4vw,64px) clamp(64px,7vw,104px);overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);background-size:120px 120px;mask-image:radial-gradient(ellipse 80% 70% at 35% 0%,#000,transparent 74%)"></div>
+    <div style="position:relative;max-width:1560px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px"><span style="width:32px;height:1px;background:#5574FF"></span><span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.3em;color:#C9CDD3;white-space:nowrap">EXPERIÊNCIAS REAIS</span></div>
+      <h1 style="margin:0;max-width:14ch;font:300 clamp(42px,6vw,88px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#FFFFFF;text-wrap:balance">Quem já passou por essa jornada.</h1>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#050505;padding:0 clamp(20px,4vw,64px) clamp(72px,8vw,120px)">
+    <div data-cols="5" data-div="d" id="numeros" style="max-width:1560px;margin:0 auto;display:grid;border-top:1px solid rgba(255,255,255,.12)">
+      <div style="padding:clamp(26px,3vw,44px) 24px clamp(26px,3vw,44px) 0"><div style="font:300 clamp(34px,4vw,58px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap;color:#FFFFFF">{{ nPax }}</div><div style="margin-top:16px;font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:#747B85">Passageiros atendidos</div></div>
+      <div style="padding:clamp(26px,3vw,44px) 24px clamp(26px,3vw,44px) 0"><div style="font:300 clamp(34px,4vw,58px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap;color:#FFFFFF">{{ nBil }}</div><div style="margin-top:16px;font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:#747B85">Bilhetes emitidos</div></div>
+      <div style="padding:clamp(26px,3vw,44px) 24px clamp(26px,3vw,44px) 0"><div style="font:300 clamp(34px,4vw,58px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap;color:#5574FF">{{ nEco }}</div><div style="margin-top:16px;font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:#747B85">Economia média</div></div>
+      <div style="padding:clamp(26px,3vw,44px) 24px clamp(26px,3vw,44px) 0"><div style="font:300 clamp(34px,4vw,58px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap;color:#FFFFFF">{{ nDest }}</div><div style="margin-top:16px;font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:#747B85">Destinos</div></div>
+      <div style="padding:clamp(26px,3vw,44px) 24px clamp(26px,3vw,44px) 0"><div style="font:300 clamp(34px,4vw,58px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;font-variant-numeric:tabular-nums;white-space:nowrap;color:#FFFFFF">{{ nGer }}</div><div style="margin-top:16px;font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:#747B85">Economia gerada</div></div>
+    </div>
+    <p style="max-width:1560px;margin:24px auto 0;font:400 11.5px/1.75 'IBM Plex Mono',monospace;color:#3A3F47">Valores demonstrativos. Serão substituídos por dados reais e auditáveis antes da publicação.</p>
+  </section>
+
+  <sc-for list="{{ historias }}" as="h" hint-placeholder-count="4">
+    <section style="{{ h.section }}">
+      <div data-story="1" style="{{ h.grid }}">
+        <div style="{{ h.photoCol }}"><image-slot id="{{ h.slot }}" src="{{ h.src }}" shape="rect" fit="cover" placeholder="{{ h.hint }}"></image-slot></div>
+        <div style="{{ h.textCol }}">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px"><span style="width:26px;height:1px;background:#5574FF"></span><span style="{{ h.eyebrow }}">{{ h.rota }}</span></div>
+          <blockquote style="{{ h.quote }}">{{ h.texto }}</blockquote>
+          <div style="display:flex;flex-wrap:wrap;gap:26px 44px;padding-top:30px;border-top:1px solid {{ h.rule }}">
+            <div><div style="{{ h.nome }}">{{ h.autor }}</div><div style="{{ h.label }}">{{ h.local }}</div></div>
+            <div><div style="{{ h.label }}">ECONOMIA</div><div style="{{ h.eco }}">{{ h.valor }}</div></div>
+            <div><div style="{{ h.label }}">STATUS</div><div style="{{ h.status }}">Viagem concluída</div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </sc-for>
+
+  <section style="position:relative;background:#111419;padding:clamp(72px,8vw,130px) clamp(20px,4vw,64px)">
+    <div style="max-width:1560px;margin:0 auto">
+      <h2 style="margin:0 0 clamp(32px,3.6vw,52px);font:300 clamp(26px,3.2vw,46px)/1.06 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#FFFFFF">Emissões recentes</h2>
+      <div style="border-top:1px solid rgba(255,255,255,.12)">
+        <sc-for list="{{ emissoes }}" as="e" hint-placeholder-count="6">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto;gap:clamp(14px,2vw,34px);align-items:center;padding:clamp(18px,2vw,26px) 0;border-bottom:1px solid rgba(255,255,255,.08)">
+            <div style="font:300 clamp(20px,2vw,28px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#FFFFFF;white-space:nowrap">{{ e.rota }}</div>
+            <div><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:10px;white-space:nowrap">EMBARQUE</div><div style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3;white-space:nowrap">{{ e.data }}</div></div>
+            <div><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:10px;white-space:nowrap">ECONOMIA</div><div style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#5574FF">{{ e.eco }}</div></div>
+            <span style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#747B85;white-space:nowrap">EMITIDA</span>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:26px 0 0;font:400 11.5px/1.75 'IBM Plex Mono',monospace;color:#3A3F47">Registros demonstrativos. Na versão publicada, apenas clientes reais e autorizados.</p>
+    </div>
+  </section>
+
+  <section style="position:relative;min-height:clamp(380px,66vh,720px);display:flex;align-items:flex-end;overflow:hidden;background:#050505">
+    <div style="position:absolute;inset:0"><image-slot id="cli-cta" src="uploads/cli-cta.webp" shape="rect" fit="cover" placeholder="CHEGADA A UM DESTINO / LOUNGE PREMIUM · 2560×1400"></image-slot></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,5,.6) 0%,rgba(5,5,5,.28) 40%,rgba(5,5,5,.94) 100%)"></div>
+    <div style="position:relative;width:100%;max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,64px) clamp(52px,6vw,96px)">
+      <h2 style="margin:0 0 34px;max-width:16ch;font:300 clamp(30px,4.6vw,70px)/1.02 'Schibsted Grotesk',sans-serif;letter-spacing:-.042em;color:#FFFFFF;text-wrap:balance">A próxima viagem dessa lista pode ser a sua.</h2>
+      <a href="cotacao.html" style="display:inline-flex;align-items:center;gap:12px;height:54px;padding:0 28px;border-radius:9px;background:#5574FF;color:#FFFFFF;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;white-space:nowrap" style-hover="background:#7C93FF">COTAR MINHA VIAGEM<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,700px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const H = [
+  { autor: 'Mariana R.', local: 'São Paulo → Orlando', rota: 'SÃO PAULO → ORLANDO', valor: 'R$ 3.180', slot: 'cli-mariana', hint: 'LIFESTYLE · JANELA DA AERONAVE · 1400×1600',
+    texto: '“Eu sabia exatamente em qual etapa minha viagem estava.”' },
+  { autor: 'Diego M.', local: 'São Paulo → Lisboa', rota: 'SÃO PAULO → LISBOA', valor: 'R$ 2.410', slot: 'cli-diego', hint: 'LIFESTYLE · TERMINAL / EMBARQUE · 1400×1600',
+    texto: '“O contrato deixou claro o prazo máximo. Não precisei cobrar ninguém para saber onde estava o processo.”' },
+  { autor: 'Camila F.', local: 'Brasília → Paris', rota: 'BRASÍLIA → PARIS', valor: 'R$ 4.020', slot: 'cli-camila', hint: 'LIFESTYLE · CHEGADA / CIDADE · 1400×1600',
+    texto: '“Estranhei pagar antes da emissão. O painel mostrava cada atualização, e o bilhete chegou como combinado.”' },
+  { autor: 'Henrique S.', local: 'Rio de Janeiro → Miami', rota: 'RIO DE JANEIRO → MIAMI', valor: 'R$ 2.870', slot: 'cli-henrique', hint: 'LIFESTYLE · LOUNGE / AEROPORTO · 1400×1600',
+    texto: '“Viajo a trabalho quatro vezes por ano. Ter contrato, prazo e histórico no mesmo lugar resolveu meu problema.”' }
+];
+
+const BRL = n => Math.round(n).toLocaleString('pt-BR');
+
+class Component extends DCLogic {
+  state = { numeros: 0 };
+  componentDidMount() {
+    // Conta de 0 ao alvo quando a faixa de numeros entra na tela, uma vez so.
+    this._s = () => {
+      if (this._contando) return;
+      const el = document.getElementById('numeros');
+      if (!el || el.getBoundingClientRect().top > window.innerHeight * 0.85) return;
+      this._contando = true;
+      const start = performance.now(), dur = 1800;
+      const step = now => {
+        const k = Math.min(1, (now - start) / dur);
+        this.setState({ numeros: 1 - Math.pow(1 - k, 3) });
+        if (k < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    window.addEventListener('scroll', this._s, { passive: true });
+    this._s();
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this._s); }
+  renderVals() {
+    // Numeros institucionais — DEMONSTRATIVOS ate a VoeAI passar os reais.
+    const nm = this.state.numeros;
+    return {
+      nPax: '+' + BRL(2480 * nm), nBil: '+' + BRL(3120 * nm),
+      nEco: Math.round(28 * nm) + '%', nDest: '+' + Math.round(60 * nm),
+      nGer: 'R$ ' + (4.2 * nm).toFixed(1).replace('.', ',') + ' mi',
+      historias: H.map((h, i) => {
+        const dark = i % 2 === 0;
+        const bg = dark ? '#050505' : '#F4F4F1';
+        const flip = i % 2 === 1;
+        return Object.assign({}, h, {
+          src: 'uploads/' + h.slot + '.webp',
+          section: 'position:relative;background:' + bg,
+          grid: 'display:grid;grid-template-columns:' + (flip ? 'minmax(0,1.1fr) minmax(0,.9fr)' : 'minmax(0,.9fr) minmax(0,1.1fr)') + ';align-items:stretch',
+          photoCol: 'position:relative;min-height:clamp(340px,56vh,640px);order:' + (flip ? 2 : 1),
+          textCol: 'display:flex;flex-direction:column;justify-content:center;padding:clamp(48px,7vw,110px) clamp(20px,4vw,72px);order:' + (flip ? 1 : 2),
+          eyebrow: 'font:500 10px/1 \'IBM Plex Mono\',monospace;letter-spacing:.28em;white-space:nowrap;color:' + (dark ? '#747B85' : '#747B85'),
+          quote: 'margin:0 0 12px;max-width:22ch;font:300 clamp(24px,3.2vw,46px)/1.14 \'Schibsted Grotesk\',sans-serif;letter-spacing:-.035em;text-wrap:balance;color:' + (dark ? '#FFFFFF' : '#050505'),
+          rule: dark ? 'rgba(255,255,255,.12)' : 'rgba(5,5,5,.16)',
+          nome: 'font:400 16px/1 \'Schibsted Grotesk\',sans-serif;margin-bottom:10px;color:' + (dark ? '#F4F4F1' : '#050505'),
+          label: 'font:500 8.5px/1 \'IBM Plex Mono\',monospace;letter-spacing:.22em;margin-bottom:11px;white-space:nowrap;color:' + (dark ? '#747B85' : '#969CA5'),
+          eco: 'font:300 22px/1 \'Schibsted Grotesk\',sans-serif;letter-spacing:-.03em;color:#5574FF;white-space:nowrap',
+          status: 'font:400 14px/1 \'Schibsted Grotesk\',sans-serif;white-space:nowrap;color:' + (dark ? '#C9CDD3' : '#3A3F47')
+        });
+      }),
+      emissoes: [
+        { rota: 'GRU → MIA', data: '18 DEZ', eco: '26%' },
+        { rota: 'GRU → LIS', data: '04 JAN', eco: '24%' },
+        { rota: 'GRU → CDG', data: '22 MAR', eco: '31%' },
+        { rota: 'GIG → MCO', data: '09 FEV', eco: '28%' },
+        { rota: 'BSB → FCO', data: '15 ABR', eco: '29%' },
+        { rota: 'POA → JFK', data: '27 MAI', eco: '25%' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Miami — VoeAI</title>
+<meta name="description" content="Miami com a VoeAI: cotação personalizada, contrato digital, prazo definido e acompanhamento até a emissão do bilhete.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23050505%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L20.6%2020.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%235574FF%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Miami — VoeAI">
+<meta property="og:description" content="Miami com a VoeAI: cotação personalizada, contrato digital, prazo definido e acompanhamento até a emissão do bilhete.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VoeAI">
+<meta property="og:image" content="uploads/miami-hero.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:#050505; color:#F4F4F1; font-family:'Schibsted Grotesk','Helvetica Neue',Helvetica,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:#5574FF; text-decoration:none; }
+  a:hover { color:#7C93FF; }
+  ::selection { background:rgba(85,116,255,.28); }
+  :focus-visible { outline:2px solid #5574FF; outline-offset:3px; }
+  image-slot { --slot-radius:0; }
+  /* slot com src ja preenchido pelo autor: sem anel tracejado de drop-zone */
+  image-slot[src]::part(ring) { display:none !important; }
+  [data-menu-btn] { display:none; }
+  @media (max-width:1024px) { header nav { display:none !important; } [data-menu-btn] { display:grid !important; } }
+  @media (max-width:600px) {
+    [data-hdr-login] { display:none !important; }
+    [data-hdr-cta] { padding:0 13px !important; font-size:10px !important; letter-spacing:.08em !important; }
+    header > div:nth-of-type(2) { gap:12px !important; }
+  }
+  @media (max-width:1080px) {
+    [data-g12] { grid-template-columns:1fr !important; }
+    [data-g12] > * { grid-column:auto !important; }
+    [data-sticky] { position:static !important; }
+    [data-split] { grid-template-columns:1fr !important; }
+  }
+  [data-split] > *, [data-story] > *, [data-two] > *, [data-g12] > *, [data-row] > * { min-width:0; }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } html { scroll-behavior:auto; } }
+  /* === grade de blocos (gerado) ===
+     auto-fit deixava o browser escolher as colunas e sobrava linha orfa
+     com borda solta. Colunas explicitas por faixa; divisor a esquerda,
+     removido no primeiro de cada linha, e respiro para o texto nao colar. */
+  [data-cols] > * { min-width:0; }
+  [data-cols][data-div] > * { border-right:0 !important; padding-left:clamp(18px,1.7vw,34px) !important; }
+  [data-div="d"] > * { border-left:1px solid rgba(255,255,255,.08) !important; }
+  [data-div="l"] > * { border-left:1px solid rgba(5,5,5,.12) !important; }
+  @media (min-width:1240px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(5,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(5n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(6,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(6n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(7,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(7n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:900px) and (max-width:1239px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:600px) and (max-width:899px) {
+    [data-cols="3"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (max-width:599px) {
+    [data-cols="3"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  /* === fim grade de blocos === */
+</style>
+</helmet>
+
+<div style="position:relative;background:#050505">
+  <dc-import name="Header" active="destinos" hint-size="100%,76px"></dc-import>
+
+  <section style="position:relative;min-height:clamp(480px,86vh,900px);display:flex;align-items:flex-end;overflow:hidden;background:#050505">
+    <div style="position:absolute;inset:0"><image-slot id="miami-hero" src="uploads/miami-hero.webp" shape="rect" fit="cover" placeholder="MIAMI · SKYLINE / OCEAN DRIVE · CINEMATOGRÁFICO · 2560×1600"></image-slot></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,5,.74) 0%,rgba(5,5,5,.22) 34%,rgba(5,5,5,.44) 56%,rgba(5,5,5,.8) 78%,rgba(5,5,5,.96) 100%)"></div>
+    <div style="position:relative;width:100%;max-width:1560px;margin:0 auto;padding:150px clamp(20px,4vw,64px) clamp(48px,6vw,88px)">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;white-space:nowrap"><a href="destinos.html" style="color:#C9CDD3">DESTINOS</a><span style="color:#5B6069">/</span><span style="color:#5574FF">ESTADOS UNIDOS</span></div>
+      <h1 style="margin:0;font:300 clamp(56px,10vw,160px)/0.92 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;color:#FFFFFF">MIAMI</h1>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:clamp(16px,2.4vw,40px);margin-top:30px">
+        <span style="font:300 clamp(16px,1.4vw,20px)/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3">Estados Unidos</span>
+        <span style="width:4px;height:4px;border-radius:50%;background:#5B6069"></span>
+        <span style="font:400 11.5px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;color:#969CA5;white-space:nowrap">MIA · 25°47'N 80°17'W</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#F4F4F1;color:#050505;padding:clamp(56px,6vw,88px) clamp(20px,4vw,64px)">
+    <div data-cols="5" data-div="l" style="max-width:1560px;margin:0 auto;display:grid;border-top:1px solid rgba(5,5,5,.16)">
+      <sc-if value="{{ show }}" hint-placeholder-val="{{ true }}">
+        <div style="display:contents">
+          <sc-for list="{{ fatos }}" as="f" hint-placeholder-count="5">
+            <div style="padding:clamp(26px,2.8vw,42px) 24px clamp(26px,2.8vw,42px) 0;border-right:1px solid rgba(5,5,5,.1)">
+              <div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:18px;white-space:nowrap">{{ f.k }}</div>
+              <div style="font:300 clamp(22px,2.2vw,30px)/1.05 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#050505;white-space:nowrap">{{ f.v }}</div>
+              <div style="margin-top:11px;font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:#747B85">{{ f.d }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#F4F4F1;color:#050505;padding:0 clamp(20px,4vw,64px) clamp(80px,9vw,150px)">
+    <div data-g12="1" style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(28px,3vw,60px);align-items:start">
+      <div style="grid-column:1 / span 7;min-width:0">
+        <h2 style="margin:0 0 26px;font:300 clamp(28px,3.4vw,48px)/1.06 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#050505">O que conhecer</h2>
+        <p style="margin:0 0 44px;max-width:50ch;font:400 15px/1.75 'Schibsted Grotesk',sans-serif;color:#5B6069;text-wrap:pretty">Miami funciona como três viagens em uma: praia, arquitetura e compras. A cidade concentra bairros com identidades muito distintas em distâncias curtas, o que facilita montar um roteiro sem grandes deslocamentos.</p>
+        <div data-cols="4" style="display:grid;gap:clamp(12px,1.4vw,20px)">
+          <sc-for list="{{ bairros }}" as="b" hint-placeholder-count="4">
+            <div style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#111419">
+              <div style="position:absolute;inset:0"><image-slot id="{{ b.slot }}" src="{{ b.src }}" shape="rect" fit="cover" placeholder="{{ b.hint }}"></image-slot></div>
+              <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 46%,rgba(5,5,5,.86))"></div>
+              <div style="position:relative;padding:20px;pointer-events:none"><div style="font:400 17px/1.2 'Schibsted Grotesk',sans-serif;color:#FFFFFF;margin-bottom:8px">{{ b.t }}</div><div style="font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:rgba(255,255,255,.7)">{{ b.d }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="grid-column:9 / span 4;min-width:0">
+        <div data-sticky="1" style="position:sticky;top:126px;padding-top:8px">
+          <div style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:28px;white-space:nowrap">CONDIÇÃO DE COTAÇÃO</div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-bottom:20px;border-bottom:1px solid rgba(5,5,5,.14)"><span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#747B85">Valor de referência</span><span style="font:300 22px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.03em;color:#969CA5;white-space:nowrap">R$ 4.890</span></div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid rgba(5,5,5,.14)"><span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#050505">Condição observada</span><span style="font:300 34px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#050505;white-space:nowrap">R$ 3.470</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;white-space:nowrap">ECONOMIA</span><span style="font:300 32px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#5574FF">29%</span></div>
+          <a href="cotacao.html" style="display:flex;align-items:center;justify-content:center;gap:11px;height:52px;margin-top:28px;border-radius:9px;background:#050505;color:#FFFFFF;font:500 11.5px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;white-space:nowrap" style-hover="background:#5574FF">COTAR MIAMI<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+          <p style="margin:16px 0 0;font:400 11px/1.65 'IBM Plex Mono',monospace;color:#969CA5">Valores demonstrativos. A condição final é apresentada em proposta formal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#050505;padding:clamp(80px,9vw,150px) clamp(20px,4vw,64px)">
+    <div style="max-width:1560px;margin:0 auto">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-bottom:clamp(24px,3vw,40px)">
+        <h2 style="margin:0;font:300 clamp(26px,3.2vw,46px)/1.06 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#FFFFFF">Outros destinos</h2>
+        <a href="destinos.html" style="font:500 10.5px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;color:#5574FF;white-space:nowrap">VER CATÁLOGO COMPLETO →</a>
+      </div>
+      <div data-cols="3" style="display:grid;gap:clamp(10px,1.2vw,18px)">
+        <sc-for list="{{ outros }}" as="o" hint-placeholder-count="3">
+          <a href="destino.html" style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#111419;color:inherit">
+            <div style="position:absolute;inset:0"><image-slot id="{{ o.slot }}" src="{{ o.src }}" shape="rect" fit="cover" placeholder="{{ o.hint }}"></image-slot></div>
+            <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 44%,rgba(5,5,5,.9))"></div>
+            <div style="position:relative;padding:20px;pointer-events:none"><div style="font:300 24px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#FFFFFF;margin-bottom:8px">{{ o.city }}</div><div style="font:400 12px/1 'Schibsted Grotesk',sans-serif;color:rgba(255,255,255,.7);white-space:nowrap">{{ o.country }}</div></div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,700px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      show: true,
+      fatos: [
+        { k: 'AEROPORTOS', v: 'MIA', d: 'Miami Intl. · também FLL' },
+        { k: 'MELHOR ÉPOCA', v: 'Mar — Mai', d: 'Menos chuva, calor moderado' },
+        { k: 'TEMPO DE VOO', v: '8h 40', d: 'Direto de GRU' },
+        { k: 'CLIMA', v: '24 — 31°C', d: 'Subtropical úmido' },
+        { k: 'FUSO', v: 'UTC−04', d: '−1h em relação a Brasília' }
+      ],
+      bairros: [
+        { t: 'South Beach', d: 'Orla, art déco e vida noturna.', slot: 'mia-south', src: 'uploads/mia-south.webp', hint: 'SOUTH BEACH · ART DÉCO / ORLA' },
+        { t: 'Wynwood', d: 'Galerias, murais e gastronomia.', slot: 'mia-wynwood', src: 'uploads/mia-wynwood.webp', hint: 'WYNWOOD · GALERIAS / MURAIS' },
+        { t: 'Design District', d: 'Arquitetura contemporânea e luxo.', slot: 'mia-design', src: 'uploads/mia-design.webp', hint: 'DESIGN DISTRICT · ARQUITETURA' },
+        { t: 'Key Biscayne', d: 'Praias tranquilas a 20 minutos.', slot: 'mia-key', src: 'uploads/mia-key.webp', hint: 'KEY BISCAYNE · LITORAL' }
+      ],
+      outros: [
+        { city: 'ORLANDO', country: 'Estados Unidos', slot: 'rel-orlando', src: 'uploads/cidade-orlando.webp', hint: 'ORLANDO · EXPERIÊNCIA / CIDADE' },
+        { city: 'NOVA YORK', country: 'Estados Unidos', slot: 'rel-ny', src: 'uploads/cidade-ny.webp', hint: 'NOVA YORK · SKYLINE EDITORIAL' },
+        { city: 'CANCÚN', country: 'México', slot: 'rel-cancun', src: 'uploads/cidade-cancun.webp', hint: 'CANCÚN · LITORAL EDITORIAL' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System 2.0 — VoeAI</title>
+<meta name="description" content="Tokens de cor, tipografia, componentes e direção de fotografia do produto VoeAI.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23050505%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L20.6%2020.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%235574FF%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Design System 2.0 — VoeAI">
+<meta property="og:description" content="Tokens de cor, tipografia, componentes e direção de fotografia do produto VoeAI.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VoeAI">
+<meta property="og:image" content="uploads/cidade-miami.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:#050505; color:#F4F4F1; font-family:'Schibsted Grotesk','Helvetica Neue',Helvetica,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:#5574FF; text-decoration:none; }
+  a:hover { color:#7C93FF; }
+  ::selection { background:rgba(85,116,255,.28); }
+  summary::-webkit-details-marker { display:none; }
+  summary { list-style:none; }
+  details[open] [data-chev] { transform:rotate(225deg) !important; }
+  :focus-visible { outline:2px solid #5574FF; outline-offset:3px; }
+  image-slot { --slot-radius:0; }
+  /* slot com src ja preenchido pelo autor: sem anel tracejado de drop-zone */
+  image-slot[src]::part(ring) { display:none !important; }
+  @keyframes soft { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+  @media (max-width:1080px) { [data-split] { grid-template-columns:1fr !important; } }
+  [data-split] > *, [data-story] > *, [data-two] > *, [data-g12] > *, [data-row] > * { min-width:0; }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+  /* === grade de blocos (gerado) ===
+     auto-fit deixava o browser escolher as colunas e sobrava linha orfa
+     com borda solta. Colunas explicitas por faixa; divisor a esquerda,
+     removido no primeiro de cada linha, e respiro para o texto nao colar. */
+  [data-cols] > * { min-width:0; }
+  [data-cols][data-div] > * { border-right:0 !important; padding-left:clamp(18px,1.7vw,34px) !important; }
+  [data-div="d"] > * { border-left:1px solid rgba(255,255,255,.08) !important; }
+  [data-div="l"] > * { border-left:1px solid rgba(5,5,5,.12) !important; }
+  @media (min-width:1240px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(5,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(5n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(6,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(6n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(7,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(7n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:900px) and (max-width:1239px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:600px) and (max-width:899px) {
+    [data-cols="3"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (max-width:599px) {
+    [data-cols="3"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  /* === fim grade de blocos === */
+</style>
+</helmet>
+
+<div style="position:relative;background:#050505;padding:clamp(56px,7vw,110px) clamp(20px,4vw,64px) clamp(80px,9vw,140px)">
+  <div style="max-width:1240px;margin:0 auto">
+
+    <div style="display:flex;align-items:center;gap:11px;margin-bottom:36px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 1.6 L22 21.4 L12 16.4 L2 21.4 Z" fill="#FFFFFF"></path><path d="M12 1.6 L12 16.4 L2 21.4 Z" fill="#5574FF"></path></svg><span style="font:500 17px/1 'Schibsted Grotesk',sans-serif;letter-spacing:.2em;color:#FFFFFF">VOEAI</span><span style="font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#3A3F47;padding-left:14px;border-left:1px solid rgba(255,255,255,.12);white-space:nowrap">DESIGN SYSTEM 2.0</span></div>
+    <h1 style="margin:0 0 22px;font:300 clamp(36px,5vw,72px)/1.02 'Schibsted Grotesk',sans-serif;letter-spacing:-.042em;color:#FFFFFF">Tokens, componentes e ritmo</h1>
+    <p style="margin:0 0 clamp(40px,5vw,72px);max-width:56ch;font:400 15px/1.75 'Schibsted Grotesk',sans-serif;color:#969CA5;text-wrap:pretty">Preto e off-white carregam a página. O azul é assinatura — CTA, percentual de economia, status ativo e linhas de rota. Nada mais.</p>
+
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(48px,6vw,80px);padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.1)">
+      <sc-for list="{{ paginas }}" as="p" hint-placeholder-count="8">
+        <a href="{{ p.href }}" style="height:34px;display:inline-flex;align-items:center;padding:0 15px;border-radius:8px;border:1px solid rgba(255,255,255,.12);font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.15em;color:#969CA5;white-space:nowrap" style-hover="border-color:#C9CDD3;color:#FFFFFF">{{ p.t }}</a>
+      </sc-for>
+    </div>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">01 · PROPORÇÃO</h2>
+    <div style="display:flex;height:64px;border-radius:10px;overflow:hidden;margin-bottom:16px">
+      <div style="flex:52;background:#050505;border-right:1px solid rgba(255,255,255,.1)"></div>
+      <div style="flex:27;background:#F4F4F1"></div>
+      <div style="flex:12;background:#171B21"></div>
+      <div style="flex:5;background:#C9CDD3"></div>
+      <div style="flex:4;background:#5574FF"></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px 28px;margin-bottom:clamp(56px,6vw,88px);font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#5B6069">
+      <span style="white-space:nowrap">52% PRETO</span><span style="white-space:nowrap">27% OFF-WHITE</span><span style="white-space:nowrap">12% FOTOGRAFIA</span><span style="white-space:nowrap">5% PRATA</span><span style="color:#5574FF;white-space:nowrap">4% AZUL</span>
+    </div>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">02 · COR</h2>
+    <div data-cols="6" style="display:grid;gap:12px;margin-bottom:clamp(56px,6vw,88px)">
+      <sc-for list="{{ cores }}" as="c" hint-placeholder-count="12">
+        <div style="border:1px solid rgba(255,255,255,.1);border-radius:10px;overflow:hidden">
+          <div style="{{ c.swatch }}"></div>
+          <div style="padding:14px 15px"><div style="font:400 12px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1;margin-bottom:9px">{{ c.name }}</div><div style="font:400 10.5px/1 'IBM Plex Mono',monospace;color:#5B6069;white-space:nowrap">{{ c.hex }}</div></div>
+        </div>
+      </sc-for>
+    </div>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">03 · TIPOGRAFIA</h2>
+    <div style="border-top:1px solid rgba(255,255,255,.1);margin-bottom:clamp(56px,6vw,88px)">
+      <sc-for list="{{ tipos }}" as="t" hint-placeholder-count="5">
+        <div data-split="1" style="display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:baseline;padding:26px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+          <span style="font:400 10.5px/1.7 'IBM Plex Mono',monospace;color:#5B6069">{{ t.spec }}</span>
+          <span style="{{ t.style }}">{{ t.sample }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">04 · BOTÕES</h2>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:34px 0;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:16px">
+      <button style="height:50px;padding:0 26px;border:none;border-radius:9px;background:#5574FF;color:#FFFFFF;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;cursor:pointer;white-space:nowrap" style-hover="background:#7C93FF">PRIMARY</button>
+      <button style="height:50px;padding:0 26px;border:1px solid rgba(201,205,211,.28);border-radius:9px;background:transparent;color:#F4F4F1;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;cursor:pointer;white-space:nowrap" style-hover="border-color:#C9CDD3;background:rgba(255,255,255,.05)">SECONDARY DARK</button>
+      <button style="height:50px;padding:0 26px;border:none;border-radius:9px;background:#F4F4F1;color:#050505;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;cursor:pointer;white-space:nowrap" style-hover="background:#FFFFFF">SECONDARY LIGHT</button>
+      <button style="height:50px;padding:0 6px;border:none;background:transparent;color:#5574FF;font:400 14px/1 'Schibsted Grotesk',sans-serif;cursor:pointer;white-space:nowrap" style-hover="color:#7C93FF">Text link →</button>
+      <button aria-label="Ícone" style="display:grid;place-items:center;width:50px;height:50px;border:1px solid rgba(201,205,211,.28);border-radius:9px;background:transparent;color:#C9CDD3;cursor:pointer" style-hover="border-color:#C9CDD3;color:#FFFFFF"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+      <button disabled="true" style="height:50px;padding:0 26px;border:1px solid rgba(255,255,255,.08);border-radius:9px;background:transparent;color:#2A2E35;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;white-space:nowrap">DISABLED</button>
+    </div>
+    <p style="margin:0 0 clamp(56px,6vw,88px);font:400 11.5px/1.7 'IBM Plex Mono',monospace;color:#3A3F47">Raio 8–10px. Sem pílula, sem glow, sem gradiente.</p>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">05 · STATUS</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:14px 34px;padding:32px 0;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:16px">
+      <sc-for list="{{ status }}" as="s" hint-placeholder-count="7">
+        <div style="display:flex;align-items:center;gap:9px"><span style="{{ s.mark }}"></span><span style="{{ s.style }}">{{ s.label }}</span></div>
+      </sc-for>
+    </div>
+    <p style="margin:0 0 clamp(56px,6vw,88px);font:400 11.5px/1.7 'IBM Plex Mono',monospace;color:#3A3F47">Sem pills coloridas. Concluído usa check prata; corrente usa ponto azul pulsante; futuro fica grafite.</p>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">06 · FAMÍLIAS DE COMPONENTE</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px;margin-bottom:16px">
+      <div style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:3/4;border-radius:14px;overflow:hidden;background:#111419">
+        <div style="position:absolute;inset:0"><image-slot id="ds-dest" src="uploads/cidade-miami.webp" shape="rect" fit="cover" placeholder="DESTINATION IMAGE"></image-slot></div>
+        <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 46%,rgba(5,5,5,.88))"></div>
+        <div style="position:relative;padding:20px;pointer-events:none"><div style="font:300 24px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#FFFFFF;margin-bottom:8px">MIAMI</div><div style="font:400 12px/1 'Schibsted Grotesk',sans-serif;color:rgba(255,255,255,.7);white-space:nowrap">Estados Unidos</div></div>
+      </div>
+      <div style="padding:24px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:#111419">
+        <div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:24px;white-space:nowrap">INTERFACE CARD</div>
+        <div style="display:flex;align-items:flex-end;gap:14px;margin-bottom:22px"><div style="font:300 28px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.045em;color:#FFFFFF">GRU</div><div style="flex:1;padding-bottom:8px"><div style="height:1px;background:#5574FF"></div></div><div style="font:300 28px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.045em;color:#FFFFFF">MIA</div></div>
+        <div style="display:flex;align-items:center;gap:9px"><span style="width:5px;height:5px;border-radius:50%;background:#5574FF;animation:soft 2.2s ease-in-out infinite"></span><span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3">Monitoramento ativo</span></div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08)">
+        <div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:24px;white-space:nowrap">OPPORTUNITY ROW</div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px"><span style="font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;color:#5574FF;white-space:nowrap">GRU → MIA</span><span style="font:300 24px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.03em;color:#5574FF">29%</span></div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px"><span style="font:400 13px/1 'Schibsted Grotesk',sans-serif;color:#5B6069;white-space:nowrap">R$ 4.890</span><span style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#FFFFFF;white-space:nowrap">R$ 3.470</span></div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid rgba(255,255,255,.12)">
+        <div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:24px;white-space:nowrap">METRIC</div>
+        <div style="font:300 clamp(38px,4.4vw,58px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;color:#FFFFFF">142</div>
+        <div style="margin-top:14px;font:400 12.5px/1.5 'Schibsted Grotesk',sans-serif;color:#5B6069">viagens monitoradas</div>
+      </div>
+    </div>
+    <p style="margin:0 0 clamp(56px,6vw,88px);font:400 11.5px/1.7 'IBM Plex Mono',monospace;color:#3A3F47">Nem toda informação vive dentro de uma caixa. Linha, tipografia e espaço são componentes.</p>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">07 · CAMPOS, ACCORDION E ESCALAS</h2>
+    <div data-split="1" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3vw,52px);margin-bottom:clamp(56px,6vw,88px)">
+      <div>
+        <label style="display:block;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:12px;white-space:nowrap">INPUT SOBRE ESCURO</span><input placeholder="Placeholder" style="width:100%;border:none;background:transparent;color:#FFFFFF;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+        <label style="display:block;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:12px;white-space:nowrap">SELECT</span><select style="width:100%;border:none;background:transparent;color:#FFFFFF;font:400 18px/1.2 'Schibsted Grotesk',sans-serif;appearance:none;cursor:pointer"><option style="background:#111419">Econômica</option><option style="background:#111419">Executiva</option></select></label>
+        <div style="margin-top:34px;display:flex;flex-wrap:wrap;gap:12px">
+          <div style="width:54px;height:54px;border:1px solid rgba(255,255,255,.16);border-radius:8px;display:grid;place-items:center;font:400 10px/1 'IBM Plex Mono',monospace;color:#5B6069">8</div>
+          <div style="width:54px;height:54px;border:1px solid rgba(255,255,255,.16);border-radius:10px;display:grid;place-items:center;font:400 10px/1 'IBM Plex Mono',monospace;color:#5B6069">10</div>
+          <div style="width:54px;height:54px;border:1px solid rgba(255,255,255,.16);border-radius:12px;display:grid;place-items:center;font:400 10px/1 'IBM Plex Mono',monospace;color:#5B6069">12</div>
+          <div style="width:54px;height:54px;border:1px solid rgba(255,255,255,.16);border-radius:16px;display:grid;place-items:center;font:400 10px/1 'IBM Plex Mono',monospace;color:#5B6069">16</div>
+          <div style="width:54px;height:54px;border:1px solid rgba(85,116,255,.5);border-radius:20px;display:grid;place-items:center;font:400 10px/1 'IBM Plex Mono',monospace;color:#5574FF">20</div>
+        </div>
+      </div>
+      <div>
+        <details style="border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.08)"><summary style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;cursor:pointer;font:400 18px/1.3 'Schibsted Grotesk',sans-serif;color:#FFFFFF">Accordion<span data-chev="1" style="flex:0 0 auto;width:10px;height:10px;border-right:1px solid #747B85;border-bottom:1px solid #747B85;transform:rotate(45deg);transition:transform .35s cubic-bezier(.16,1,.3,1)"></span></summary><div style="padding:0 0 22px;font:400 14px/1.75 'Schibsted Grotesk',sans-serif;color:#969CA5">Resposta com respiro e largura de leitura confortável.</div></details>
+        <div style="margin-top:34px;font:400 11.5px/2 'IBM Plex Mono',monospace;color:#5B6069">
+          <div style="color:#3A3F47;letter-spacing:.2em;font-size:9px;margin-bottom:14px">MOTION</div>
+          MICROINTERAÇÃO 200–400ms<br>ENTRADA 500–800ms<br>GRANDE MOVIMENTO 800–1200ms<br>EASING cubic-bezier(.16,1,.3,1)<br>HOVER FOTO scale(1.025)<br>BREAKPOINTS 1440 / 1280 / 1024 / 768 / 390
+        </div>
+      </div>
+    </div>
+
+    <h2 style="margin:0 0 30px;font:400 12px/1 'IBM Plex Mono',monospace;letter-spacing:.26em;color:#5574FF;white-space:nowrap">08 · FOTOGRAFIA</h2>
+    <div data-cols="4" style="display:grid;gap:14px;margin-bottom:16px">
+      <sc-for list="{{ foto }}" as="f" hint-placeholder-count="4">
+        <div style="position:relative;aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:#111419"><image-slot id="{{ f.slot }}" src="{{ f.src }}" shape="rect" fit="cover" placeholder="{{ f.hint }}"></image-slot></div>
+      </sc-for>
+    </div>
+    <p style="margin:0;font:400 11.5px/1.75 'IBM Plex Mono',monospace;color:#3A3F47">Sem filtro azul. Céu natural, arquitetura real, contraste cinematográfico, grão discreto. Overlay preto 40–70%, nunca colorido.</p>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      paginas: [
+        ['HOME', 'index.html'], ['COMO FUNCIONA', 'como-funciona.html'], ['DESTINOS', 'destinos.html'],
+        ['DESTINO', 'destino.html'], ['SEGURANÇA', 'seguranca.html'], ['CLIENTES', 'clientes.html'],
+        ['COTAÇÃO', 'cotacao.html'], ['PAINEL', 'painel.html']
+      ].map(p => ({ t: p[0], href: p[1] })),
+      cores: [
+        ['Preto absoluto', '#050505'], ['Preto editorial', '#080A0D'], ['Grafite', '#111419'], ['Grafite 2', '#171B21'],
+        ['Branco', '#FFFFFF'], ['Off-white', '#F4F4F1'], ['Off-white 2', '#ECEDEA'], ['Prata', '#C9CDD3'],
+        ['Prata escura', '#747B85'], ['Cinza texto', '#969CA5'], ['Azul VoeAI', '#5574FF'], ['Azul profundo', '#344EBB']
+      ].map(([name, hex]) => ({ name: name, hex: hex, swatch: 'height:74px;background:' + hex + ';border-bottom:1px solid rgba(255,255,255,.08)' })),
+      tipos: [
+        { spec: 'H1 · Schibsted 300\nclamp(44,6.2vw,92) / −.038em', sample: 'Viaje mais', style: 'font:300 clamp(32px,4.4vw,60px)/1 \'Schibsted Grotesk\',sans-serif;letter-spacing:-.04em;color:#FFFFFF' },
+        { spec: 'H2 · Schibsted 300\nclamp(32,4.4vw,64) / −.04em', sample: 'Uma condição diferente', style: 'font:300 clamp(26px,3.4vw,46px)/1.04 \'Schibsted Grotesk\',sans-serif;letter-spacing:-.04em;color:#FFFFFF' },
+        { spec: 'H3 · Schibsted 400\n21–30 / −.025em', sample: 'Viagem em monitoramento', style: 'font:400 26px/1.15 \'Schibsted Grotesk\',sans-serif;letter-spacing:-.025em;color:#F4F4F1' },
+        { spec: 'BODY · Schibsted 400\n15 / 1.75', sample: 'Contrate sua viagem com condições diferenciadas e acompanhe cada etapa até a emissão.', style: 'font:400 15px/1.75 \'Schibsted Grotesk\',sans-serif;color:#969CA5;max-width:52ch;display:block' },
+        { spec: 'LABEL · Plex Mono 500\n9–10.5 / .22–.30em', sample: 'MONITORAMENTO ATIVO', style: 'font:500 10.5px/1 \'IBM Plex Mono\',monospace;letter-spacing:.26em;color:#C9CDD3;white-space:nowrap' }
+      ],
+      status: [
+        ['Cotação', 2], ['Proposta', 2], ['Contrato', 2], ['Pagamento', 2], ['Monitoramento', 1], ['Emissão', 0], ['Bilhete', 0]
+      ].map(([label, st]) => ({
+        label: label,
+        mark: st === 1 ? 'width:6px;height:6px;border-radius:50%;background:#5574FF;animation:soft 2.2s ease-in-out infinite'
+          : st === 2 ? 'width:6px;height:6px;border-radius:50%;background:#C9CDD3'
+            : 'width:6px;height:6px;border-radius:50%;border:1px solid rgba(255,255,255,.22)',
+        style: 'font:400 14px/1 \'Schibsted Grotesk\',sans-serif;white-space:nowrap;color:' + (st === 1 ? '#FFFFFF' : st === 2 ? '#C9CDD3' : '#5B6069')
+      })),
+      foto: [
+        { slot: 'ds-f1', src: 'uploads/break-aviacao.webp', hint: 'AVIATION · AERONAVE / PISTA' },
+        { slot: 'ds-f2', src: 'uploads/cidade-ny.webp', hint: 'DESTINATION · SKYLINE' },
+        { slot: 'ds-f3', src: 'uploads/comunidade.webp', hint: 'EXPERIENCE · JANELA / CABINE' },
+        { slot: 'ds-f4', src: 'uploads/bg-terminal.webp', hint: 'ARQUITETURA · TERMINAL' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

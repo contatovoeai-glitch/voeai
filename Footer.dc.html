@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<footer style="position:relative;background:#050505;padding:clamp(72px,8vw,120px) clamp(20px,4vw,64px) 0">
+  <div style="max-width:1560px;margin:0 auto">
+    <div data-split="1" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:32px;align-items:end;padding-bottom:clamp(56px,6vw,90px);border-bottom:1px solid rgba(255,255,255,.1)">
+      <div style="min-width:0">
+        <div style="display:flex;align-items:center;gap:11px;margin-bottom:26px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 1.6 L22 21.4 L12 16.4 L2 21.4 Z" fill="#FFFFFF"></path><path d="M12 1.6 L12 16.4 L2 21.4 Z" fill="#5574FF"></path></svg><span style="font:500 20px/1 'Schibsted Grotesk',sans-serif;letter-spacing:.2em;color:#FFFFFF">VOEAI</span></div>
+        <p style="margin:0;max-width:30ch;font:300 clamp(20px,2.2vw,30px)/1.25 'Schibsted Grotesk',sans-serif;letter-spacing:-.03em;color:#969CA5;text-wrap:balance">Uma nova forma de contratar e acompanhar sua viagem.</p>
+      </div>
+      <a href="cotacao.html" style="display:inline-flex;align-items:center;gap:11px;height:50px;padding:0 24px;border-radius:9px;background:#5574FF;color:#FFFFFF;font:500 11.5px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;white-space:nowrap" style-hover="background:#7C93FF">COTAR VIAGEM<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div>
+
+    <div data-cols="5" style="display:grid;gap:clamp(28px,3vw,48px);padding:clamp(48px,5vw,76px) 0;border-bottom:1px solid rgba(255,255,255,.1)">
+      <sc-for list="{{ cols }}" as="c" hint-placeholder-count="5">
+        <div style="min-width:0">
+          <div style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:24px;white-space:nowrap">{{ c.t }}</div>
+          <div style="display:flex;flex-direction:column;gap:13px">
+            <sc-for list="{{ c.links }}" as="l" hint-placeholder-count="6">
+              <a href="{{ l.href }}" style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#969CA5" style-hover="color:#FFFFFF">{{ l.t }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div data-cols="3" style="display:grid;gap:clamp(24px,3vw,48px);padding:clamp(36px,4vw,56px) 0;border-bottom:1px solid rgba(255,255,255,.1);font:400 12.5px/1.9 'IBM Plex Mono',monospace;color:#5B6069">
+      <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">DADOS DA EMPRESA</div><div>Razão social — a definir</div><div>CNPJ 00.000.000/0001-00</div><div>Endereço — a definir</div></div>
+      <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">CONTATO</div><div>+55 (00) 0000-0000</div><div>contato@voeai.com.br</div></div>
+      <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">REDES</div><div style="display:flex;gap:18px;flex-wrap:wrap"><a href="index.html" style="color:#969CA5;font-size:12.5px" style-hover="color:#FFFFFF">Instagram</a><a href="index.html" style="color:#969CA5;font-size:12.5px" style-hover="color:#FFFFFF">LinkedIn</a><a href="index.html" style="color:#969CA5;font-size:12.5px" style-hover="color:#FFFFFF">YouTube</a></div></div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:26px 0 32px">
+      <span style="font:400 11.5px/1.6 'IBM Plex Mono',monospace;color:#3A3F47">© 2026 VoeAI. Todos os direitos reservados.</span>
+      <div style="display:flex;flex-wrap:wrap;gap:22px"><a href="index.html" style="font:400 11.5px/1 'IBM Plex Mono',monospace;color:#5B6069;white-space:nowrap" style-hover="color:#C9CDD3">Termos</a><a href="index.html" style="font:400 11.5px/1 'IBM Plex Mono',monospace;color:#5B6069;white-space:nowrap" style-hover="color:#C9CDD3">Privacidade</a><a href="index.html" style="font:400 11.5px/1 'IBM Plex Mono',monospace;color:#5B6069;white-space:nowrap" style-hover="color:#C9CDD3">LGPD</a></div>
+    </div>
+    <p style="margin:0;padding-bottom:36px;max-width:98ch;font:400 11px/1.75 'IBM Plex Mono',monospace;color:#2A2E35">Percentuais, valores, painéis e depoimentos exibidos neste protótipo são demonstrativos. Condições comerciais reais são apresentadas em proposta formal e formalizadas em contrato antes de qualquer pagamento.</p>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      cols: [
+        ['EMPRESA', [['Sobre', 'como-funciona.html'], ['Como funciona', 'como-funciona.html'], ['Tecnologia', 'index.html#plataforma'], ['Segurança', 'seguranca.html'], ['Clientes', 'clientes.html'], ['Contato', 'cotacao.html']]],
+        ['VIAGENS', [['Destinos', 'destinos.html'], ['Oportunidades', 'index.html#destinos'], ['Internacionais', 'destinos.html'], ['Nacionais', 'destinos.html'], ['Família', 'destinos.html'], ['Corporativo', 'destinos.html']]],
+        ['PLATAFORMA', [['Área do cliente', 'painel.html'], ['Monitoramento', 'painel.html'], ['Contratos', 'painel.html'], ['Documentos', 'painel.html'], ['Pagamentos', 'painel.html'], ['Atendimento', 'painel.html']]],
+        ['SUPORTE', [['Central de ajuda', 'index.html#faq'], ['FAQ', 'index.html#faq'], ['WhatsApp', 'cotacao.html'], ['Contato', 'cotacao.html']]],
+        ['LEGAL', [['Termos', 'seguranca.html'], ['Privacidade', 'seguranca.html'], ['LGPD', 'seguranca.html'], ['Cancelamento', 'seguranca.html'], ['Condições', 'seguranca.html']]]
+      ].map(([t, links]) => ({ t: t, links: links.map(l => ({ t: l[0], href: l[1] })) }))
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cotação — VoeAI</title>
+<meta name="description" content="Informe origem, destino, datas e passageiros e receba sua condição em proposta formal, sem compromisso.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23050505%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L20.6%2020.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%235574FF%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Cotação — VoeAI">
+<meta property="og:description" content="Informe origem, destino, datas e passageiros e receba sua condição em proposta formal, sem compromisso.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VoeAI">
+<meta property="og:image" content="uploads/cta-final.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:#F4F4F1; color:#050505; font-family:'Schibsted Grotesk','Helvetica Neue',Helvetica,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:#5574FF; text-decoration:none; }
+  a:hover { color:#7C93FF; }
+  ::selection { background:rgba(85,116,255,.28); }
+  input::placeholder, textarea::placeholder { color:#969CA5; }
+  :focus-visible { outline:2px solid #5574FF; outline-offset:3px; }
+  image-slot { --slot-radius:0; }
+  /* slot com src ja preenchido pelo autor: sem anel tracejado de drop-zone */
+  image-slot[src]::part(ring) { display:none !important; }
+  @keyframes rise { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:none; } }
+  @keyframes soft { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+  [data-menu-btn] { display:none; }
+  @media (max-width:1024px) { header nav { display:none !important; } [data-menu-btn] { display:grid !important; } }
+  @media (max-width:600px) {
+    [data-hdr-login] { display:none !important; }
+    [data-hdr-cta] { padding:0 13px !important; font-size:10px !important; letter-spacing:.08em !important; }
+    header > div:nth-of-type(2) { gap:12px !important; }
+  }
+  @media (max-width:1080px) {
+    [data-g12] { grid-template-columns:1fr !important; }
+    [data-g12] > * { grid-column:auto !important; }
+    [data-sticky] { position:static !important; }
+    [data-split] { grid-template-columns:1fr !important; }
+  }
+  @media (max-width:640px) { [data-two] { grid-template-columns:1fr !important; } }
+  [data-split] > *, [data-story] > *, [data-two] > *, [data-g12] > *, [data-row] > * { min-width:0; }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } html { scroll-behavior:auto; } }
+  /* === grade de blocos (gerado) ===
+     auto-fit deixava o browser escolher as colunas e sobrava linha orfa
+     com borda solta. Colunas explicitas por faixa; divisor a esquerda,
+     removido no primeiro de cada linha, e respiro para o texto nao colar. */
+  [data-cols] > * { min-width:0; }
+  [data-cols][data-div] > * { border-right:0 !important; padding-left:clamp(18px,1.7vw,34px) !important; }
+  [data-div="d"] > * { border-left:1px solid rgba(255,255,255,.08) !important; }
+  [data-div="l"] > * { border-left:1px solid rgba(5,5,5,.12) !important; }
+  @media (min-width:1240px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(5,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(5n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(6,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(6n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(7,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(7n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:900px) and (max-width:1239px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:600px) and (max-width:899px) {
+    [data-cols="3"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (max-width:599px) {
+    [data-cols="3"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  /* === fim grade de blocos === */
+</style>
+</helmet>
+
+<div style="position:relative;background:#F4F4F1">
+  <dc-import name="Header" hint-size="100%,76px"></dc-import>
+
+  <section style="position:relative;background:#050505;padding:clamp(140px,17vh,200px) clamp(20px,4vw,64px) clamp(56px,6vw,90px);overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.026) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.026) 1px,transparent 1px);background-size:120px 120px;mask-image:radial-gradient(ellipse 80% 70% at 40% 0%,#000,transparent 74%)"></div>
+    <div style="position:relative;max-width:1560px;margin:0 auto">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:30px"><span style="width:32px;height:1px;background:#5574FF"></span><span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.3em;color:#C9CDD3;white-space:nowrap">SOLICITAR COTAÇÃO</span></div>
+      <h1 style="margin:0;max-width:18ch;font:300 clamp(34px,5vw,74px)/1.02 'Schibsted Grotesk',sans-serif;letter-spacing:-.042em;color:#FFFFFF;text-wrap:balance">Conte sua viagem. Nós preparamos a condição.</h1>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#F4F4F1;padding:clamp(56px,6vw,96px) clamp(20px,4vw,64px) clamp(80px,9vw,150px)">
+    <div style="max-width:1360px;margin:0 auto">
+      <sc-if value="{{ form }}" hint-placeholder-val="{{ true }}">
+        <div data-g12="1" style="display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(28px,3vw,60px);align-items:start">
+          <div style="grid-column:1 / span 4;min-width:0">
+            <div data-sticky="1" style="position:sticky;top:126px">
+              <sc-for list="{{ passos }}" as="p" hint-placeholder-count="6">
+                <div style="display:flex;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid rgba(5,5,5,.1)">
+                  <span style="{{ p.num }}">{{ p.n }}</span>
+                  <span style="{{ p.label }}">{{ p.t }}</span>
+                  <span style="{{ p.mark }}"></span>
+                </div>
+              </sc-for>
+              <div style="margin-top:26px;font:400 11.5px/1.8 'IBM Plex Mono',monospace;color:#969CA5">SEM COMPROMISSO<br>RESPOSTA EM ATÉ 24H ÚTEIS</div>
+            </div>
+          </div>
+
+          <div style="grid-column:6 / span 7;min-width:0">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding-bottom:20px;border-bottom:1px solid rgba(5,5,5,.16)">
+              <span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.24em;color:#747B85;white-space:nowrap">ETAPA {{ stepNum }} DE 06</span>
+              <div style="flex:1;max-width:200px;height:1px;background:rgba(5,5,5,.14)"><div style="{{ bar }}"></div></div>
+            </div>
+
+            <h2 style="margin:34px 0 10px;font:300 clamp(24px,2.8vw,38px)/1.12 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#050505">{{ stepTitle }}</h2>
+            <p style="margin:0 0 40px;font:400 14.5px/1.7 'Schibsted Grotesk',sans-serif;color:#5B6069">{{ stepHint }}</p>
+
+            <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+              <div data-two="1" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 clamp(20px,2.4vw,40px)">
+                <label style="display:block;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">ORIGEM</span><input value="{{ vOrigem }}" onChange="{{ setOrigem }}" placeholder="São Paulo (GRU)" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+                <label style="display:block;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">DESTINO</span><input value="{{ vDestino }}" onChange="{{ setDestino }}" placeholder="Miami (MIA)" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ s1 }}" hint-placeholder-val="{{ false }}">
+              <div data-two="1" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 clamp(20px,2.4vw,40px)">
+                <div data-cal="1" style="position:relative;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">DATA DE IDA</span><button type="button" onClick="{{ calAbreIda }}" style="{{ campoData }}"><span>{{ vIdaFmt }}</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#747B85" stroke-width="1.4" style="flex:0 0 auto"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></button><sc-if value="{{ calIdaOn }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ calPop }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                      <span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#050505;white-space:nowrap">{{ calTitulo }}</span>
+                      <span style="display:flex;gap:6px">
+                        <button type="button" onClick="{{ calPrev }}" aria-label="Mês anterior" style="{{ calNav }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"></path></svg></button>
+                        <button type="button" onClick="{{ calNext }}" aria-label="Próximo mês" style="{{ calNav }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"></path></svg></button>
+                      </span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin-bottom:4px">
+                      <sc-for list="{{ calSemana }}" as="w" hint-placeholder-count="7">
+                        <div style="text-align:center;padding:6px 0;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#969CA5">{{ w.t }}</div>
+                      </sc-for>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px">
+                      <sc-for list="{{ calDias }}" as="d" hint-placeholder-count="35">
+                        <button type="button" onClick="{{ d.pick }}" style="{{ d.style }}">{{ d.t }}</button>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-top:14px;padding-top:13px;border-top:1px solid rgba(5,5,5,.1)">
+                      <button type="button" onClick="{{ calHoje }}" style="{{ calLink }}">HOJE</button>
+                      <button type="button" onClick="{{ calFechar }}" style="{{ calLink }}">FECHAR</button>
+                    </div>
+                  </div>
+                </sc-if></div>
+                <div data-cal="1" style="position:relative;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">DATA DE VOLTA</span><button type="button" onClick="{{ calAbreVolta }}" style="{{ campoData }}"><span>{{ vVoltaFmt }}</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#747B85" stroke-width="1.4" style="flex:0 0 auto"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></button><sc-if value="{{ calVoltaOn }}" hint-placeholder-val="{{ false }}">
+                  <div style="{{ calPop }}">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+                      <span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#050505;white-space:nowrap">{{ calTitulo }}</span>
+                      <span style="display:flex;gap:6px">
+                        <button type="button" onClick="{{ calPrev }}" aria-label="Mês anterior" style="{{ calNav }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M15 6l-6 6 6 6"></path></svg></button>
+                        <button type="button" onClick="{{ calNext }}" aria-label="Próximo mês" style="{{ calNav }}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"></path></svg></button>
+                      </span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin-bottom:4px">
+                      <sc-for list="{{ calSemana }}" as="w" hint-placeholder-count="7">
+                        <div style="text-align:center;padding:6px 0;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;color:#969CA5">{{ w.t }}</div>
+                      </sc-for>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px">
+                      <sc-for list="{{ calDias }}" as="d" hint-placeholder-count="35">
+                        <button type="button" onClick="{{ d.pick }}" style="{{ d.style }}">{{ d.t }}</button>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;margin-top:14px;padding-top:13px;border-top:1px solid rgba(5,5,5,.1)">
+                      <button type="button" onClick="{{ calHoje }}" style="{{ calLink }}">HOJE</button>
+                      <button type="button" onClick="{{ calFechar }}" style="{{ calLink }}">FECHAR</button>
+                    </div>
+                  </div>
+                </sc-if></div>
+                <label style="display:flex;align-items:center;gap:12px;grid-column:1/-1;margin-top:26px;cursor:pointer"><input type="checkbox" checked="{{ vFlex }}" onChange="{{ setFlex }}" style="width:16px;height:16px;accent-color:#5574FF"><span style="font:400 14.5px/1.4 'Schibsted Grotesk',sans-serif;color:#3A3F47">Tenho flexibilidade de alguns dias nas datas</span></label>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+              <div data-cols="6" style="display:grid;gap:0 clamp(20px,2.4vw,40px)">
+                <label style="display:block;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">ADULTOS</span><input type="number" min="1" value="{{ vAd }}" onChange="{{ setAd }}" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+                <label style="display:block;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">CRIANÇAS</span><input type="number" min="0" value="{{ vCh }}" onChange="{{ setCh }}" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+                <label style="display:block;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">BEBÊS</span><input type="number" min="0" value="{{ vIn }}" onChange="{{ setIn }}" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+              <div>
+                <div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:16px;white-space:nowrap">CLASSE</div>
+                <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:32px">
+                  <sc-for list="{{ classes }}" as="c" hint-placeholder-count="3"><button onClick="{{ c.pick }}" style="{{ c.style }}">{{ c.label }}</button></sc-for>
+                </div>
+                <label style="display:block;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">PREFERÊNCIAS (OPCIONAL)</span><textarea value="{{ vPref }}" onChange="{{ setPref }}" rows="3" placeholder="Companhia, horários, bagagem, assentos…" style="width:100%;border:none;background:transparent;color:#050505;font:400 17px/1.6 'Schibsted Grotesk',sans-serif;resize:vertical"></textarea></label>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+              <div data-two="1" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 clamp(20px,2.4vw,40px)">
+                <label style="display:block;min-width:0;grid-column:1/-1;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">NOME COMPLETO</span><input value="{{ vNome }}" onChange="{{ setNome }}" placeholder="Como no documento" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+                <label style="display:block;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">E-MAIL</span><input type="email" value="{{ vEmail }}" onChange="{{ setEmail }}" placeholder="voce@email.com" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+                <label style="display:block;min-width:0;padding:18px 0;border-bottom:1px solid rgba(5,5,5,.16)"><span style="display:block;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:12px;white-space:nowrap">WHATSAPP</span><input value="{{ vFone }}" onChange="{{ setFone }}" placeholder="(00) 00000-0000" style="width:100%;border:none;background:transparent;color:#050505;font:400 18px/1.2 'Schibsted Grotesk',sans-serif"></label>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+              <div style="border-top:1px solid rgba(5,5,5,.16)">
+                <sc-for list="{{ resumo }}" as="r" hint-placeholder-count="9">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:20px;padding:15px 0;border-bottom:1px solid rgba(5,5,5,.1)"><span style="font:400 13px/1.4 'Schibsted Grotesk',sans-serif;color:#969CA5">{{ r.k }}</span><span style="font:400 15px/1.4 'Schibsted Grotesk',sans-serif;color:#050505;text-align:right">{{ r.v }}</span></div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:40px">
+              <button onClick="{{ voltar }}" style="{{ backStyle }}">VOLTAR</button>
+              <button onClick="{{ avancar }}" style="display:inline-flex;align-items:center;gap:12px;height:54px;padding:0 28px;border:none;border-radius:9px;background:#050505;color:#FFFFFF;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;cursor:pointer;white-space:nowrap" style-hover="background:#5574FF">{{ nextLabel }}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+            </div>
+            <p style="margin:22px 0 0;font:400 11.5px/1.7 'IBM Plex Mono',monospace;color:#969CA5">Seus dados são usados apenas para preparar a proposta. Nenhuma cobrança ocorre nesta etapa.</p>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:760px;animation:rise .6s cubic-bezier(.16,1,.3,1) both">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:34px"><span style="width:8px;height:8px;border-radius:50%;background:#5574FF;animation:soft 2.2s ease-in-out infinite"></span><span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.28em;color:#747B85;white-space:nowrap">SOLICITAÇÃO REGISTRADA</span></div>
+          <h2 style="margin:0 0 24px;font:300 clamp(34px,4.6vw,68px)/1.02 'Schibsted Grotesk',sans-serif;letter-spacing:-.042em;color:#050505">Cotação recebida.</h2>
+          <div style="font:400 14px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5574FF;margin-bottom:30px;white-space:nowrap">COT-2026-01842</div>
+          <p style="margin:0 0 48px;max-width:46ch;font:400 16px/1.75 'Schibsted Grotesk',sans-serif;color:#5B6069;text-wrap:pretty">Nossa equipe irá analisar os dados informados e apresentar sua proposta com valor, prazo de emissão e condições.</p>
+          <div data-cols="5" data-div="l" style="display:grid;border-top:1px solid rgba(5,5,5,.16);margin-bottom:44px">
+            <div style="padding:26px 24px 26px 0;border-right:1px solid rgba(5,5,5,.1)"><div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:14px;white-space:nowrap">ROTA</div><div style="font:400 17px/1.3 'Schibsted Grotesk',sans-serif;color:#050505">{{ doneRota }}</div></div>
+            <div style="padding:26px 24px 26px 0;border-right:1px solid rgba(5,5,5,.1)"><div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:14px;white-space:nowrap">PASSAGEIROS</div><div style="font:400 17px/1.3 'Schibsted Grotesk',sans-serif;color:#050505">{{ donePax }}</div></div>
+            <div style="padding:26px 0"><div style="font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#969CA5;margin-bottom:14px;white-space:nowrap">STATUS</div><div style="font:400 17px/1.3 'Schibsted Grotesk',sans-serif;color:#050505">Em análise</div></div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:14px">
+            <a href="painel.html" style="display:inline-flex;align-items:center;gap:12px;height:54px;padding:0 28px;border-radius:9px;background:#5574FF;color:#FFFFFF;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;white-space:nowrap" style-hover="background:#7C93FF">ACOMPANHAR SOLICITAÇÃO<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+            <a href="index.html" style="display:inline-flex;align-items:center;height:54px;padding:0 26px;border-radius:9px;border:1px solid rgba(5,5,5,.18);color:#050505;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;white-space:nowrap" style-hover="background:#050505;color:#FFFFFF">VOLTAR AO INÍCIO</a>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,700px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PASSOS = [
+  ['01', 'Origem e destino', 'Para onde vamos?', 'De onde você sai e para onde quer chegar.'],
+  ['02', 'Datas', 'Quando você viaja?', 'Datas exatas ou aproximadas — dá para ajustar depois.'],
+  ['03', 'Passageiros', 'Quem viaja com você?', 'Informe quantas pessoas embarcam.'],
+  ['04', 'Classe e preferências', 'Como você prefere voar?', 'Preferências são consideradas conforme disponibilidade.'],
+  ['05', 'Contato', 'Como falamos com você?', 'Usamos apenas para enviar a proposta.'],
+  ['06', 'Resumo', 'Confira antes de enviar', 'Nada é cobrado ao enviar a solicitação.']
+];
+const CLASSES = ['Econômica', 'Premium Economy', 'Executiva'];
+
+const MESES = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO',
+  'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];
+const SEMANA = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const brDate = s => s ? s.slice(8, 10) + '/' + s.slice(5, 7) + '/' + s.slice(0, 4) : 'Selecionar';
+
+class Component extends DCLogic {
+  state = { step: 0, done: false, d: { origem: '', destino: '', ida: '', volta: '', flex: true, ad: 2, ch: 0, inf: 0, classe: 'Econômica', pref: '', nome: '', email: '', fone: '' }, cal: null, calRef: iso(new Date()).slice(0, 8) + '01' };
+  // Calendario proprio, igual ao do simulador da home: o seletor nativo do
+  // <input type="date"> ignora tipografia e cor da marca.
+  _abreCal = qual => () => this.setState(s => ({
+    cal: s.cal === qual ? null : qual,
+    calRef: (s.d[qual] || iso(new Date())).slice(0, 8) + '01'
+  }));
+  _andaMes = passo => () => this.setState(s => {
+    const [a, m] = s.calRef.split('-').map(Number);
+    return { calRef: iso(new Date(a, m - 1 + passo, 1)) };
+  });
+  _pegaDia = dia => () => this.setState(s => ({ d: Object.assign({}, s.d, { [s.cal]: dia }), cal: null }));
+  componentDidMount() {
+    this._fora = e => {
+      if (!this.state.cal) return;
+      if (e.target.closest && e.target.closest('[data-cal]')) return;
+      this.setState({ cal: null });
+    };
+    document.addEventListener('click', this._fora);
+  }
+  componentWillUnmount() { document.removeEventListener('click', this._fora); }
+  _set(k) { return e => { const v = e.target.type === 'checkbox' ? e.target.checked : e.target.value; this.setState(s => ({ d: Object.assign({}, s.d, { [k]: v }) })); }; }
+  _pax() {
+    const d = this.state.d, ad = +d.ad || 0, ch = +d.ch || 0, inf = +d.inf || 0, p = [];
+    if (ad) p.push(ad + (ad > 1 ? ' adultos' : ' adulto'));
+    if (ch) p.push(ch + (ch > 1 ? ' crianças' : ' criança'));
+    if (inf) p.push(inf + (inf > 1 ? ' bebês' : ' bebê'));
+    return p.join(', ') || '—';
+  }
+  renderVals() {
+    const { step, done, d } = this.state, P = PASSOS[step];
+    // grade do calendario: semanas completas a partir do domingo anterior ao dia 1
+    const [calA, calM] = this.state.calRef.split('-').map(Number);
+    const inicio = new Date(calA, calM - 1, 1).getDay();
+    const noMes = new Date(calA, calM, 0).getDate();
+    const hoje = iso(new Date());
+    const escolhido = this.state.cal ? (d[this.state.cal] || '') : '';
+    const calTitulo = MESES[calM - 1] + ' ' + calA;
+    const calDias = [];
+    for (let i = 0; i < Math.ceil((inicio + noMes) / 7) * 7; i++) {
+      const n = i - inicio + 1;
+      const dentro = n >= 1 && n <= noMes;
+      const dia = dentro ? iso(new Date(calA, calM - 1, n)) : '';
+      const sel = dentro && dia === escolhido;
+      calDias.push({
+        t: dentro ? String(n) : '',
+        pick: dentro ? this._pegaDia(dia) : () => {},
+        style: 'height:34px;padding:0;border:none;border-radius:8px;font-variant-numeric:tabular-nums;'
+          + "font:400 13px/1 'Schibsted Grotesk',sans-serif;transition:background .18s ease;"
+          + (!dentro ? 'background:transparent;color:transparent;cursor:default'
+            : sel ? 'background:#5574FF;color:#FFFFFF;cursor:pointer'
+              : dia === hoje ? 'background:transparent;color:#050505;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(85,116,255,.6)'
+                : 'background:transparent;color:#050505;cursor:pointer')
+      });
+    }
+    return {
+      form: !done, done: done,
+      stepNum: P[0], stepTitle: P[2], stepHint: P[3],
+      bar: 'height:1px;background:#5574FF;transition:width .5s cubic-bezier(.16,1,.3,1);width:' + ((step + 1) / 6 * 100) + '%',
+      s0: step === 0, s1: step === 1, s2: step === 2, s3: step === 3, s4: step === 4, s5: step === 5,
+      passos: PASSOS.map((p, i) => {
+        const now = i === step, past = i < step;
+        return {
+          n: p[0], t: p[1],
+          num: 'font:400 10px/1 \'IBM Plex Mono\',monospace;letter-spacing:.2em;white-space:nowrap;color:' + (now ? '#5574FF' : '#C9CDD3'),
+          label: 'flex:1;font:400 15px/1.3 \'Schibsted Grotesk\',sans-serif;letter-spacing:-.015em;transition:color .4s ease;color:' + (now ? '#050505' : past ? '#5B6069' : '#969CA5'),
+          mark: 'width:6px;height:6px;border-radius:50%;transition:all .4s ease;background:' + (now || past ? '#5574FF' : 'transparent') + ';border:1px solid ' + (now || past ? '#5574FF' : 'rgba(5,5,5,.2)')
+        };
+      }),
+      classes: CLASSES.map(c => ({
+        label: c, pick: () => this.setState(s => ({ d: Object.assign({}, s.d, { classe: c }) })),
+        style: 'height:44px;padding:0 20px;border-radius:9px;cursor:pointer;white-space:nowrap;transition:all .3s ease;font:400 14px/1 \'Schibsted Grotesk\',sans-serif;border:1px solid ' + (d.classe === c ? '#050505' : 'rgba(5,5,5,.16)') + ';background:' + (d.classe === c ? '#050505' : 'transparent') + ';color:' + (d.classe === c ? '#FFFFFF' : '#5B6069')
+      })),
+      vIdaFmt: brDate(d.ida), vVoltaFmt: brDate(d.volta),
+      calIdaOn: this.state.cal === 'ida', calVoltaOn: this.state.cal === 'volta',
+      calAbreIda: this._abreCal('ida'), calAbreVolta: this._abreCal('volta'),
+      calPrev: this._andaMes(-1), calNext: this._andaMes(1),
+      calFechar: () => this.setState({ cal: null }),
+      calHoje: () => this.setState(s => ({ d: Object.assign({}, s.d, { [s.cal]: iso(new Date()) }), cal: null })),
+      calTitulo: calTitulo, calSemana: SEMANA.map(w => ({ t: w })), calDias: calDias,
+      campoData: 'display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:0;'
+        + "border:none;background:transparent;cursor:pointer;text-align:left;font:400 18px/1.2 'Schibsted Grotesk',sans-serif;"
+        + 'color:' + (d.ida || d.volta ? '#050505' : '#969CA5'),
+      calPop: 'position:absolute;left:0;top:calc(100% + 10px);z-index:30;width:min(304px,86vw);padding:18px;'
+        + 'border:1px solid rgba(5,5,5,.14);border-radius:12px;background:#FFFFFF;box-shadow:0 30px 70px -30px rgba(5,5,5,.35)',
+      calNav: 'display:grid;place-items:center;width:26px;height:26px;padding:0;border:1px solid rgba(5,5,5,.14);'
+        + 'border-radius:7px;background:transparent;color:#5B6069;cursor:pointer',
+      calLink: "padding:0;border:none;background:transparent;cursor:pointer;font:500 9.5px/1 'IBM Plex Mono',monospace;"
+        + 'letter-spacing:.16em;color:#5574FF',
+      vOrigem: d.origem, vDestino: d.destino, vIda: d.ida, vVolta: d.volta, vFlex: d.flex, vAd: d.ad, vCh: d.ch, vIn: d.inf, vPref: d.pref, vNome: d.nome, vEmail: d.email, vFone: d.fone,
+      setOrigem: this._set('origem'), setDestino: this._set('destino'), setIda: this._set('ida'), setVolta: this._set('volta'), setFlex: this._set('flex'),
+      setAd: this._set('ad'), setCh: this._set('ch'), setIn: this._set('inf'), setPref: this._set('pref'), setNome: this._set('nome'), setEmail: this._set('email'), setFone: this._set('fone'),
+      resumo: [
+        { k: 'Origem', v: d.origem || 'São Paulo (GRU)' }, { k: 'Destino', v: d.destino || 'Miami (MIA)' },
+        { k: 'Ida', v: d.ida || 'A definir' }, { k: 'Volta', v: d.volta || 'A definir' },
+        { k: 'Flexibilidade', v: d.flex ? 'Sim, alguns dias' : 'Datas fixas' },
+        { k: 'Passageiros', v: this._pax() }, { k: 'Classe', v: d.classe },
+        { k: 'Preferências', v: d.pref || '—' },
+        { k: 'Contato', v: (d.nome || 'A informar') + (d.fone ? ' · ' + d.fone : '') }
+      ],
+      nextLabel: step === 5 ? 'SOLICITAR COTAÇÃO' : 'CONTINUAR',
+      backStyle: 'height:54px;padding:0 22px;border-radius:9px;border:1px solid rgba(5,5,5,.18);background:transparent;color:#5B6069;font:500 12px/1 \'IBM Plex Mono\',monospace;letter-spacing:.13em;cursor:pointer;transition:opacity .3s ease;white-space:nowrap;opacity:' + (step === 0 ? .35 : 1) + ';pointer-events:' + (step === 0 ? 'none' : 'auto'),
+      voltar: () => this.setState({ step: Math.max(0, step - 1) }),
+      avancar: () => { if (step === 5) { this.setState({ done: true }); window.scrollTo({ top: 0, behavior: 'smooth' }); } else this.setState({ step: step + 1 }); },
+      doneRota: (d.origem || 'São Paulo') + ' → ' + (d.destino || 'Miami'),
+      donePax: this._pax()
+    };
+  }
+}
+</script>
+</body>
+</html>

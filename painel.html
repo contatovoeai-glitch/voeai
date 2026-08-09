@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do cliente — VoeAI</title>
+<meta name="description" content="Status da viagem, contrato, documentos, pagamentos e emissão do bilhete em um único ambiente.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23050505%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L20.6%2020.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%235574FF%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Painel do cliente — VoeAI">
+<meta property="og:description" content="Status da viagem, contrato, documentos, pagamentos e emissão do bilhete em um único ambiente.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VoeAI">
+<meta property="og:image" content="uploads/break-terminal.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; background:#050505; color:#F4F4F1; font-family:'Schibsted Grotesk','Helvetica Neue',Helvetica,sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:#5574FF; text-decoration:none; }
+  a:hover { color:#7C93FF; }
+  ::selection { background:rgba(85,116,255,.28); }
+  input::placeholder { color:#5B6069; }
+  :focus-visible { outline:2px solid #5574FF; outline-offset:3px; }
+  @keyframes soft { 0%,100% { opacity:.35; } 50% { opacity:1; } }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+  @media (max-width:860px) {
+    [data-shell] { grid-template-columns:1fr !important; }
+    [data-aside] { position:static !important; height:auto !important; border-right:none !important; border-bottom:1px solid rgba(255,255,255,.08) !important; }
+    [data-aside] nav { flex-direction:row !important; overflow-x:auto !important; }
+    [data-aside] [data-foot] { display:none !important; }
+  }
+  @media (max-width:700px) { [data-row] { grid-template-columns:1fr !important; } }
+  @media (max-width:700px) {
+    /* a barra superior nao cabe com titulo + 3 metadados em 390px */
+    [data-topbar-meta] { display:none !important; }
+    /* 6 etapas em 6 trilhas de ~57px: os rotulos colidem. Vira faixa rolavel. */
+    [data-tl] { grid-template-columns:repeat(6,minmax(84px,1fr)) !important;
+      overflow-x:auto !important; padding-bottom:6px; }
+  }
+  [data-split] > *, [data-story] > *, [data-two] > *, [data-g12] > *, [data-row] > * { min-width:0; }
+  /* itens de grid tem min-width:auto por padrao: sem isso o conteudo do painel
+     estica a trilha e a pagina inteira rola na horizontal no celular */
+  [data-shell] > * { min-width:0; }
+  [data-aside] nav { min-width:0; }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } }
+  /* === grade de blocos (gerado) ===
+     auto-fit deixava o browser escolher as colunas e sobrava linha orfa
+     com borda solta. Colunas explicitas por faixa; divisor a esquerda,
+     removido no primeiro de cada linha, e respiro para o texto nao colar. */
+  [data-cols] > * { min-width:0; }
+  [data-cols][data-div] > * { border-right:0 !important; padding-left:clamp(18px,1.7vw,34px) !important; }
+  [data-div="d"] > * { border-left:1px solid rgba(255,255,255,.08) !important; }
+  [data-div="l"] > * { border-left:1px solid rgba(5,5,5,.12) !important; }
+  @media (min-width:1240px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(5,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(5n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(6,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(6n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(7,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(7n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:900px) and (max-width:1239px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:600px) and (max-width:899px) {
+    [data-cols="3"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (max-width:599px) {
+    [data-cols="3"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  /* === fim grade de blocos === */
+</style>
+</helmet>
+
+<div data-shell="1" style="display:grid;grid-template-columns:242px minmax(0,1fr);min-height:100vh;background:#050505">
+
+  <aside data-aside="1" style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,.08);background:#080A0D;padding:24px 16px">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;padding:0 8px 30px;color:#FFFFFF"><svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M12 1.6 L22 21.4 L12 16.4 L2 21.4 Z" fill="#FFFFFF"></path><path d="M12 1.6 L12 16.4 L2 21.4 Z" fill="#5574FF"></path></svg><span style="font:500 14px/1 'Schibsted Grotesk',sans-serif;letter-spacing:.2em">VOEAI</span></a>
+    <nav style="display:flex;flex-direction:column;gap:2px">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="6">
+        <button onClick="{{ n.pick }}" style="{{ n.style }}"><span style="{{ n.dot }}"></span>{{ n.label }}</button>
+      </sc-for>
+    </nav>
+    <div data-foot="1" style="margin-top:auto;padding:18px 10px 4px;border-top:1px solid rgba(255,255,255,.07)">
+      <div style="font:400 9.5px/1.8 'IBM Plex Mono',monospace;color:#3A3F47;margin-bottom:16px">CONTRATO<br>CTR-2026-01842</div>
+      <a href="index.html" style="display:flex;align-items:center;gap:9px;font:400 12.5px/1 'Schibsted Grotesk',sans-serif;color:#5B6069" style-hover="color:#FFFFFF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg>Sair</a>
+    </div>
+  </aside>
+
+  <main style="min-width:0;display:flex;flex-direction:column">
+    <div style="position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 clamp(20px,2.8vw,42px);height:70px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(5,5,5,.88);backdrop-filter:blur(22px)">
+      <div style="display:flex;align-items:center;gap:16px;min-width:0">
+        <h1 style="margin:0;font:400 16px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.01em;color:#FFFFFF;white-space:nowrap">{{ title }}</h1>
+        <span data-topbar-meta="1" style="display:inline-flex;align-items:center;gap:8px;font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;color:#C9CDD3;white-space:nowrap"><span style="width:5px;height:5px;border-radius:50%;background:#5574FF;animation:soft 2s ease-in-out infinite"></span>MONITORAMENTO ATIVO</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <span data-topbar-meta="1" style="font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;color:#3A3F47;white-space:nowrap">ATUALIZADO AGORA</span>
+        <span data-topbar-meta="1" style="font:400 13px/1 'Schibsted Grotesk',sans-serif;color:#969CA5;white-space:nowrap">Rafael Almeida</span>
+        <span style="display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#171B21;font:500 10.5px/1 'IBM Plex Mono',monospace;color:#C9CDD3">RA</span>
+      </div>
+    </div>
+
+    <div style="padding:clamp(24px,2.8vw,44px);display:flex;flex-direction:column;gap:clamp(16px,2vw,28px)">
+
+      <sc-if value="{{ tViagem }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:clamp(20px,2.4vw,36px);animation:fadeIn .4s ease both">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:28px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.1)">
+            <div style="display:flex;align-items:flex-end;gap:clamp(18px,2.6vw,44px)">
+              <div><div style="font:300 clamp(30px,3.6vw,52px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.045em;color:#FFFFFF">São Paulo</div><div style="margin-top:11px;font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;color:#5B6069">GRU</div></div>
+              <div style="padding-bottom:16px"><svg width="52" height="10" viewBox="0 0 54 10" fill="none" stroke="#5574FF" stroke-width="1"><path d="M0 5h46M41 1l5 4-5 4"></path></svg></div>
+              <div><div style="font:300 clamp(30px,3.6vw,52px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.045em;color:#FFFFFF">Lisboa</div><div style="margin-top:11px;font:400 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;color:#5B6069">LIS</div></div>
+            </div>
+            <div style="display:flex;gap:clamp(20px,2.6vw,44px);flex-wrap:wrap">
+              <div><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:13px;white-space:nowrap">PRAZO MÁXIMO</div><div style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#5574FF;white-space:nowrap">08 DEZ 2026</div></div>
+              <div><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:13px;white-space:nowrap">EMBARQUE</div><div style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1;white-space:nowrap">18 DEZ 2026</div></div>
+              <div><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:13px;white-space:nowrap">ECONOMIA</div><div style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#5574FF">27%</div></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:30px;white-space:nowrap">LINHA DO TEMPO DA CONTRATAÇÃO</div>
+            <div data-tl="1" style="position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px">
+              <div aria-hidden="true" style="position:absolute;left:calc(8.3333% - 3px);right:calc(8.3333% - 3px);top:6px;height:1px;background:rgba(255,255,255,.12)"></div>
+              <div aria-hidden="true" style="position:absolute;left:calc(8.3333% - 3px);width:calc(50% + 3px);top:6px;height:1px;background:#5574FF"></div>
+              <sc-for list="{{ tl }}" as="t" hint-placeholder-count="6">
+                <div style="position:relative;text-align:center"><span style="{{ t.dot }}"></span><div style="{{ t.label }}">{{ t.k }}</div><div style="font:400 10px/1 'IBM Plex Mono',monospace;color:#3A3F47;margin-top:9px;white-space:nowrap">{{ t.date }}</div></div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div data-cols="4" data-div="d" style="display:grid;border-top:1px solid rgba(255,255,255,.1);margin-top:12px">
+            <div style="padding:26px 24px 26px 0;border-right:1px solid rgba(255,255,255,.07)"><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:16px;white-space:nowrap">CONTRATO</div><div style="display:flex;align-items:center;gap:9px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9CDD3" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg><span style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Assinado</span></div></div>
+            <div style="padding:26px 24px 26px 0;border-right:1px solid rgba(255,255,255,.07)"><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:16px;white-space:nowrap">PAGAMENTO</div><div style="display:flex;align-items:center;gap:9px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9CDD3" stroke-width="2"><path d="M20 6 9 17l-5-5"></path></svg><span style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Confirmado</span></div></div>
+            <div style="padding:26px 24px 26px 0;border-right:1px solid rgba(255,255,255,.07)"><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:16px;white-space:nowrap">DOCUMENTOS</div><div style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1;white-space:nowrap">5 / 5 validados</div></div>
+            <div style="padding:26px 0"><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:16px;white-space:nowrap">PRÓXIMA ETAPA</div><div style="display:flex;align-items:center;gap:9px"><span style="width:6px;height:6px;border-radius:50%;background:#5574FF;animation:soft 2s ease-in-out infinite"></span><span style="font:400 16px/1 'Schibsted Grotesk',sans-serif;color:#FFFFFF">Emissão</span></div></div>
+          </div>
+
+          <div style="margin-top:16px">
+            <div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:8px;white-space:nowrap">HISTÓRICO DE ATUALIZAÇÕES</div>
+            <div style="border-top:1px solid rgba(255,255,255,.1)">
+              <sc-for list="{{ log }}" as="l" hint-placeholder-count="5">
+                <div data-row="1" style="display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:20px;align-items:center;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.07)">
+                  <span style="font:400 11.5px/1 'IBM Plex Mono',monospace;color:#3A3F47;white-space:nowrap">{{ l.when }}</span>
+                  <span style="font:400 14.5px/1.4 'Schibsted Grotesk',sans-serif;color:#C9CDD3">{{ l.what }}</span>
+                  <span style="{{ l.tag }}">{{ l.status }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ tContrato }}" hint-placeholder-val="{{ false }}">
+        <div data-row="1" style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,3vw,56px);animation:fadeIn .4s ease both">
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:30px"><span style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;white-space:nowrap">CONTRATO DIGITAL</span><span style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#5574FF;white-space:nowrap">ASSINADO</span></div>
+            <div style="font:300 clamp(26px,3vw,40px)/1.05 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#FFFFFF;margin-bottom:12px">CTR-2026-01842</div>
+            <div style="font:400 12px/1 'IBM Plex Mono',monospace;color:#5B6069;margin-bottom:36px">ASSINADO EM 02 AGO 2026 · 14:21</div>
+            <div style="border-top:1px solid rgba(255,255,255,.1)">
+              <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#747B85">Valor de referência</span><span style="font:400 14px/1 'Schibsted Grotesk',sans-serif;color:#969CA5;white-space:nowrap">R$ 8.420</span></div>
+              <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3">Valor contratado</span><span style="font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#FFFFFF;white-space:nowrap">R$ 6.140</span></div>
+              <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#747B85">Economia</span><span style="font:400 14px/1 'Schibsted Grotesk',sans-serif;color:#5574FF;white-space:nowrap">R$ 2.280 · 27%</span></div>
+              <div style="display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#747B85">Prazo máximo de emissão</span><span style="font:400 14px/1 'Schibsted Grotesk',sans-serif;color:#5574FF;white-space:nowrap">08 DEZ 2026</span></div>
+            </div>
+            <button style="height:50px;margin-top:30px;padding:0 24px;border-radius:9px;border:1px solid rgba(201,205,211,.28);background:transparent;color:#F4F4F1;font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;cursor:pointer;white-space:nowrap" style-hover="background:#5574FF;border-color:#5574FF">BAIXAR CONTRATO (PDF)</button>
+          </div>
+          <div>
+            <div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:30px;white-space:nowrap">CONDIÇÕES FORMALIZADAS</div>
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <sc-for list="{{ condicoes }}" as="c" hint-placeholder-count="4">
+                <div style="display:flex;gap:14px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5574FF" stroke-width="1.6" style="flex:0 0 auto;margin-top:3px"><path d="M20 6 9 17l-5-5"></path></svg><span style="font:400 14.5px/1.65 'Schibsted Grotesk',sans-serif;color:#969CA5">{{ c.t }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ tPagamento }}" hint-placeholder-val="{{ false }}">
+        <div style="animation:fadeIn .4s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:26px"><span style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;white-space:nowrap">PAGAMENTOS REGISTRADOS</span><span style="font:400 15px/1 'Schibsted Grotesk',sans-serif;color:#5574FF;white-space:nowrap">Total R$ 6.140</span></div>
+          <div style="border-top:1px solid rgba(255,255,255,.1)">
+            <sc-for list="{{ pagamentos }}" as="p" hint-placeholder-count="2">
+              <div data-row="1" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,1fr) auto;gap:20px;align-items:center;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.07)">
+                <span style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#969CA5;white-space:nowrap">{{ p.data }}</span>
+                <span style="font:400 14.5px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">{{ p.desc }}</span>
+                <span style="font:400 15px/1 'Schibsted Grotesk',sans-serif;color:#FFFFFF;white-space:nowrap">{{ p.valor }}</span>
+                <span style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#747B85;white-space:nowrap">CONFIRMADO</span>
+              </div>
+            </sc-for>
+          </div>
+          <p style="margin:24px 0 0;font:400 11.5px/1.7 'IBM Plex Mono',monospace;color:#3A3F47">Comprovantes disponíveis para download na aba Documentos.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ tDocumentos }}" hint-placeholder-val="{{ false }}">
+        <div style="border-top:1px solid rgba(255,255,255,.1);animation:fadeIn .4s ease both">
+          <sc-for list="{{ docs }}" as="d" hint-placeholder-count="5">
+            <div data-row="1" style="display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:20px;align-items:center;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.07)">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5B6069" stroke-width="1.3"><path d="M4 4h10l6 6v10H4zM14 4v6h6"></path></svg>
+              <span style="font:400 15px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">{{ d.name }}</span>
+              <span style="font:400 11.5px/1 'IBM Plex Mono',monospace;color:#3A3F47;white-space:nowrap">{{ d.meta }}</span>
+              <span style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#5574FF;white-space:nowrap">VALIDADO</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ tBilhete }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:700px;animation:fadeIn .4s ease both">
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 110px;border:1px solid rgba(255,255,255,.12);border-radius:16px;overflow:hidden">
+            <div style="padding:clamp(26px,2.8vw,38px)">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:34px"><span style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;white-space:nowrap">BOARDING PASS</span><svg width="15" height="15" viewBox="0 0 24 24" style="transform:rotate(45deg)"><path d="M12 1.6 L22 21.4 L12 16.4 L2 21.4 Z" fill="#5574FF"></path></svg></div>
+              <div style="display:flex;align-items:flex-end;gap:22px;margin-bottom:32px">
+                <div><div style="font:300 42px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;color:#FFFFFF">GRU</div><div style="margin-top:10px;font:400 12px/1 'Schibsted Grotesk',sans-serif;color:#5B6069">São Paulo</div></div>
+                <div style="flex:1;padding-bottom:10px"><div style="height:1px;background:repeating-linear-gradient(90deg,rgba(201,205,211,.5) 0 4px,transparent 4px 8px)"></div></div>
+                <div style="text-align:right"><div style="font:300 42px/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.05em;color:#FFFFFF">LIS</div><div style="margin-top:10px;font:400 12px/1 'Schibsted Grotesk',sans-serif;color:#5B6069">Lisboa</div></div>
+              </div>
+              <div style="display:flex;gap:36px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)">
+                <div><div style="font:500 8px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#5B6069;margin-bottom:11px;white-space:nowrap">PASSAGEIRO</div><div style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3;white-space:nowrap">RAFAEL ALMEIDA</div></div>
+                <div><div style="font:500 8px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#5B6069;margin-bottom:11px;white-space:nowrap">EMBARQUE</div><div style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3;white-space:nowrap">18 DEZ · 22:40</div></div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:center;border-left:1px dashed rgba(255,255,255,.18);background:rgba(255,255,255,.02)"><span style="writing-mode:vertical-rl;font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.28em;color:#5B6069;white-space:nowrap">AGUARDANDO EMISSÃO</span></div>
+          </div>
+          <p style="margin:24px 4px 0;font:400 12px/1.75 'IBM Plex Mono',monospace;color:#3A3F47">O bilhete será disponibilizado aqui assim que a emissão for concluída, respeitando o prazo máximo de 08 DEZ 2026.</p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ tAtendimento }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:780px;animation:fadeIn .4s ease both">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.1)"><span style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;white-space:nowrap">ATENDIMENTO · CTR-2026-01842</span><span style="display:inline-flex;align-items:center;gap:8px;font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.16em;color:#C9CDD3;white-space:nowrap"><span style="width:5px;height:5px;border-radius:50%;background:#5574FF;animation:soft 2s ease-in-out infinite"></span>ONLINE</span></div>
+          <div style="padding:26px 0;display:flex;flex-direction:column;gap:16px">
+            <div style="align-self:flex-start;max-width:76%"><div style="font:400 15px/1.65 'Schibsted Grotesk',sans-serif;color:#C9CDD3">Olá, Rafael. Sua viagem está em monitoramento e dentro do cronograma. A janela de emissão começa em 26 NOV.</div><div style="margin-top:10px;font:400 10px/1 'IBM Plex Mono',monospace;color:#3A3F47">OPERAÇÃO · 09:12</div></div>
+            <div style="align-self:flex-end;max-width:76%;text-align:right"><div style="font:400 15px/1.65 'Schibsted Grotesk',sans-serif;color:#FFFFFF">Consigo incluir bagagem despachada depois da emissão?</div><div style="margin-top:10px;font:400 10px/1 'IBM Plex Mono',monospace;color:#5B6069">VOCÊ · 09:15</div></div>
+            <div style="align-self:flex-start;max-width:76%"><div style="font:400 15px/1.65 'Schibsted Grotesk',sans-serif;color:#C9CDD3">Sim. As condições de bagagem seguem a política da companhia e constam na proposta. Registro sua solicitação no contrato.</div><div style="margin-top:10px;font:400 10px/1 'IBM Plex Mono',monospace;color:#3A3F47">OPERAÇÃO · 09:18</div></div>
+          </div>
+          <div style="display:flex;gap:14px;align-items:center;padding-top:22px;border-top:1px solid rgba(255,255,255,.1)">
+            <input placeholder="Escreva sua mensagem" style="flex:1;height:48px;border:none;background:transparent;color:#F4F4F1;font:400 15px/1 'Schibsted Grotesk',sans-serif">
+            <button style="height:46px;padding:0 22px;border:none;border-radius:9px;background:#5574FF;color:#FFFFFF;font:500 11px/1 'IBM Plex Mono',monospace;letter-spacing:.14em;cursor:pointer;white-space:nowrap" style-hover="background:#7C93FF">ENVIAR</button>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const NAV = [['viagem', 'Minha viagem'], ['contrato', 'Contrato'], ['pagamento', 'Pagamento'], ['documentos', 'Documentos'], ['bilhete', 'Bilhete'], ['atendimento', 'Atendimento']];
+const TITLES = { viagem: 'GRU → LIS · 18 DEZ 2026', contrato: 'Contrato digital', pagamento: 'Pagamento', documentos: 'Documentos', bilhete: 'Bilhete', atendimento: 'Atendimento' };
+
+class Component extends DCLogic {
+  state = { tab: 'viagem' };
+  renderVals() {
+    const tab = this.state.tab;
+    return {
+      title: TITLES[tab],
+      tViagem: tab === 'viagem', tContrato: tab === 'contrato', tPagamento: tab === 'pagamento',
+      tDocumentos: tab === 'documentos', tBilhete: tab === 'bilhete', tAtendimento: tab === 'atendimento',
+      nav: NAV.map(([k, label]) => ({
+        label: label, pick: () => this.setState({ tab: k }),
+        style: 'display:flex;align-items:center;gap:11px;padding:12px;border-radius:8px;cursor:pointer;text-align:left;white-space:nowrap;transition:all .3s ease;font:400 13.5px/1 \'Schibsted Grotesk\',sans-serif;border:none;background:' + (tab === k ? 'rgba(255,255,255,.06)' : 'transparent') + ';color:' + (tab === k ? '#FFFFFF' : '#5B6069'),
+        dot: 'width:5px;height:5px;border-radius:50%;flex:0 0 auto;background:' + (tab === k ? '#5574FF' : '#2A2E35')
+      })),
+      tl: [['Cotação', '28 JUL', 2], ['Contrato', '02 AGO', 2], ['Pagamento', '02 AGO', 2], ['Monitoramento', 'em curso', 1], ['Emissão', 'até 08 DEZ', 0], ['Bilhete', '—', 0]].map(([k, date, st]) => ({
+        k: k, date: date,
+        dot: st === 2 ? 'display:block;width:13px;height:13px;margin:0 auto 16px;border-radius:50%;background:#5574FF'
+          : st === 1 ? 'display:block;width:13px;height:13px;margin:0 auto 16px;border-radius:50%;background:#5574FF;box-shadow:0 0 0 5px rgba(85,116,255,.16);animation:soft 2.2s ease-in-out infinite'
+            : 'display:block;width:13px;height:13px;margin:0 auto 16px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:#050505',
+        label: 'font:' + (st === 1 ? '500' : '400') + ' 12.5px/1.3 \'Schibsted Grotesk\',sans-serif;color:' + (st === 1 ? '#FFFFFF' : st === 2 ? '#C9CDD3' : '#5B6069')
+      })),
+      log: [
+        { when: '08 AGO · 09:12', what: 'Viagem dentro do cronograma. Janela de emissão inicia em 26 NOV.', status: 'MONITORAMENTO', hl: 1 },
+        { when: '02 AGO · 15:48', what: 'Pagamento da parcela 2 confirmado.', status: 'PAGAMENTO', hl: 0 },
+        { when: '02 AGO · 14:21', what: 'Contrato assinado digitalmente por ambas as partes.', status: 'CONTRATO', hl: 0 },
+        { when: '30 JUL · 11:05', what: 'Proposta aprovada pelo cliente.', status: 'PROPOSTA', hl: 0 },
+        { when: '28 JUL · 17:30', what: 'Cotação recebida e encaminhada à operação.', status: 'COTAÇÃO', hl: 0 }
+      ].map(l => Object.assign({}, l, {
+        tag: 'font:500 9.5px/1 \'IBM Plex Mono\',monospace;letter-spacing:.2em;white-space:nowrap;color:' + (l.hl ? '#5574FF' : '#3A3F47')
+      })),
+      condicoes: [
+        { t: 'Prazo máximo de emissão definido antes da contratação.' },
+        { t: 'Regras de alteração, cancelamento e reembolso descritas em cláusula própria.' },
+        { t: 'Dados dos passageiros conferidos e vinculados ao contrato.' },
+        { t: 'Registro de aceite com data, hora e IP.' }
+      ],
+      pagamentos: [
+        { data: '02 AGO 2026', desc: 'Entrada — contratação', valor: 'R$ 3.070' },
+        { data: '02 SET 2026', desc: 'Parcela 2 de 2', valor: 'R$ 3.070' }
+      ],
+      docs: [
+        { name: 'Contrato de contratação', meta: 'PDF · 02 AGO 2026' },
+        { name: 'Comprovante — entrada', meta: 'PDF · 02 AGO 2026' },
+        { name: 'Comprovante — parcela 2', meta: 'PDF · 02 SET 2026' },
+        { name: 'Documento do passageiro', meta: 'JPG · 29 JUL 2026' },
+        { name: 'Proposta comercial', meta: 'PDF · 29 JUL 2026' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

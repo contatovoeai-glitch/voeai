@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<header style="position:fixed;top:0;left:0;right:0;z-index:90">
+  <div style="{{ hdr }}"></div>
+  <div style="position:relative;max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,64px);height:76px;display:flex;align-items:center;justify-content:space-between;gap:32px">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;color:#FFFFFF;flex:0 0 auto">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:block"><path d="M12 1.6 L22 21.4 L12 16.4 L2 21.4 Z" fill="#FFFFFF"></path><path d="M12 1.6 L12 16.4 L2 21.4 Z" fill="#5574FF"></path></svg>
+      <span style="font:500 16px/1 'Schibsted Grotesk',sans-serif;letter-spacing:.2em">VOEAI</span>
+    </a>
+    <nav style="display:flex;align-items:center;gap:clamp(16px,2.2vw,34px);flex:1 1 auto;justify-content:center">
+      <a href="como-funciona.html" style="{{ nComo }}" style-hover="color:#FFFFFF">Como funciona</a>
+      <a href="destinos.html" style="{{ nDest }}" style-hover="color:#FFFFFF">Destinos</a>
+      <a href="index.html#economia" style="{{ nEco }}" style-hover="color:#FFFFFF">Economia</a>
+      <a href="painel.html" style="{{ nPlat }}" style-hover="color:#FFFFFF">Plataforma</a>
+      <a href="clientes.html" style="{{ nCli }}" style-hover="color:#FFFFFF">Clientes</a>
+      <a href="seguranca.html" style="{{ nSeg }}" style-hover="color:#FFFFFF">Segurança</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px;flex:0 0 auto">
+      <a href="painel.html" data-hdr-login="1" style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3;white-space:nowrap" style-hover="color:#FFFFFF">Entrar</a>
+      <a href="cotacao.html" data-hdr-cta="1" style="display:inline-flex;align-items:center;height:40px;padding:0 20px;border-radius:8px;background:#5574FF;color:#FFFFFF;font:500 11.5px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;white-space:nowrap" style-hover="background:#7C93FF">COTAR VIAGEM</a>
+      <button data-menu-btn="1" onClick="{{ toggleMenu }}" aria-label="Menu" style="place-items:center;width:40px;height:40px;border:1px solid rgba(255,255,255,.16);border-radius:8px;background:rgba(255,255,255,.04);color:#C9CDD3;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button>
+    </div>
+  </div>
+  <div style="{{ drawer }}">
+    <div style="padding:10px clamp(20px,4vw,64px) 24px;display:flex;flex-direction:column">
+      <a href="como-funciona.html" style="padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Como funciona</a>
+      <a href="destinos.html" style="padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Destinos</a>
+      <a href="index.html#economia" style="padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Economia</a>
+      <a href="painel.html" style="padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Plataforma</a>
+      <a href="clientes.html" style="padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Clientes</a>
+      <a href="seguranca.html" style="padding:15px 0;border-bottom:1px solid rgba(255,255,255,.07);font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Segurança</a>
+        <a href="painel.html" style="padding:15px 0;font:400 17px/1 'Schibsted Grotesk',sans-serif;color:#F4F4F1">Entrar no painel</a>
+    </div>
+  </div>
+</header>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;como&quot;,&quot;destinos&quot;,&quot;economia&quot;,&quot;plataforma&quot;,&quot;clientes&quot;,&quot;seguranca&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { on: false, menu: false };
+  componentDidMount() {
+    this._h = () => { const on = (window.scrollY || 0) > 40; if (on !== this.state.on) this.setState({ on }); };
+    window.addEventListener('scroll', this._h, { passive: true });
+    this._h();
+  }
+  componentWillUnmount() { window.removeEventListener('scroll', this._h); }
+  renderVals() {
+    const a = this.props.active || '', menu = this.state.menu, on = this.state.on;
+    const link = k => 'font:400 13.5px/1 \'Schibsted Grotesk\',sans-serif;color:' + (a === k ? '#FFFFFF' : '#C9CDD3') + ';white-space:nowrap';
+    return {
+      hdr: 'position:absolute;inset:0;pointer-events:none;transition:opacity .45s ease;background:rgba(5,5,5,.82);backdrop-filter:blur(24px) saturate(1.3);border-bottom:1px solid rgba(255,255,255,.08);opacity:' + (on || menu ? 1 : 0),
+      nComo: link('como'), nDest: link('destinos'), nEco: link('economia'), nPlat: link('plataforma'), nCli: link('clientes'), nSeg: link('seguranca'),
+      toggleMenu: () => this.setState({ menu: !menu }),
+      drawer: 'position:relative;overflow:hidden;background:rgba(5,5,5,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,' + (menu ? '.08' : '0') + ');transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .35s ease;max-height:' + (menu ? '420px' : '0px') + ';opacity:' + (menu ? 1 : 0)
+    };
+  }
+}
+</script>
+</body>
+</html>

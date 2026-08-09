@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Segurança — VoeAI</title>
+<meta name="description" content="Contrato digital, prazo máximo de emissão, pagamento registrado e documentos centralizados no painel do cliente.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20rx%3D%224%22%20fill%3D%22%23050505%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L20.6%2020.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Cpath%20d%3D%22M12%203.4%20L12%2016%20L3.4%2020.4%20Z%22%20fill%3D%22%235574FF%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#050505">
+<meta property="og:title" content="Segurança — VoeAI">
+<meta property="og:description" content="Contrato digital, prazo máximo de emissão, pagamento registrado e documentos centralizados no painel do cliente.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="VoeAI">
+<meta property="og:image" content="uploads/seg-break.webp">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:#050505; color:#F4F4F1; font-family:'Schibsted Grotesk','Helvetica Neue',Helvetica,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:#5574FF; text-decoration:none; }
+  a:hover { color:#7C93FF; }
+  ::selection { background:rgba(85,116,255,.28); }
+  :focus-visible { outline:2px solid #5574FF; outline-offset:3px; }
+  image-slot { --slot-radius:0; }
+  /* slot com src ja preenchido pelo autor: sem anel tracejado de drop-zone */
+  image-slot[src]::part(ring) { display:none !important; }
+  [data-menu-btn] { display:none; }
+  @media (max-width:1024px) { header nav { display:none !important; } [data-menu-btn] { display:grid !important; } }
+  @media (max-width:600px) {
+    [data-hdr-login] { display:none !important; }
+    [data-hdr-cta] { padding:0 13px !important; font-size:10px !important; letter-spacing:.08em !important; }
+    header > div:nth-of-type(2) { gap:12px !important; }
+  }
+  @media (max-width:1080px) {
+    [data-g12] { grid-template-columns:1fr !important; }
+    [data-g12] > * { grid-column:auto !important; }
+    [data-split] { grid-template-columns:1fr !important; }
+  }
+  [data-split] > *, [data-story] > *, [data-two] > *, [data-g12] > *, [data-row] > * { min-width:0; }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.001ms !important; transition-duration:.001ms !important; } html { scroll-behavior:auto; } }
+  /* === grade de blocos (gerado) ===
+     auto-fit deixava o browser escolher as colunas e sobrava linha orfa
+     com borda solta. Colunas explicitas por faixa; divisor a esquerda,
+     removido no primeiro de cada linha, e respiro para o texto nao colar. */
+  [data-cols] > * { min-width:0; }
+  [data-cols][data-div] > * { border-right:0 !important; padding-left:clamp(18px,1.7vw,34px) !important; }
+  [data-div="d"] > * { border-left:1px solid rgba(255,255,255,.08) !important; }
+  [data-div="l"] > * { border-left:1px solid rgba(5,5,5,.12) !important; }
+  @media (min-width:1240px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(5,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(5n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(6,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(6n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(7,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(7n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:900px) and (max-width:1239px) {
+    [data-cols="3"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(4,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(4n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (min-width:600px) and (max-width:899px) {
+    [data-cols="3"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(2n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(3,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(3n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  @media (max-width:599px) {
+    [data-cols="3"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="3"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="4"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="4"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="5"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="5"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="6"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="6"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+    [data-cols="7"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
+    [data-cols="7"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
+  }
+  /* === fim grade de blocos === */
+</style>
+</helmet>
+
+<div style="position:relative;background:#050505">
+  <dc-import name="Header" active="seguranca" hint-size="100%,76px"></dc-import>
+
+  <section style="position:relative;padding:clamp(150px,18vh,220px) clamp(20px,4vw,64px) clamp(72px,8vw,120px);overflow:hidden">
+    <div aria-hidden="true" style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 70% 70% at 40% 0%,#000,transparent 72%)"></div>
+    <div data-g12="1" style="position:relative;max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(28px,3vw,60px);align-items:end">
+      <div style="grid-column:1 / span 7;min-width:0">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:32px"><span style="width:32px;height:1px;background:#5574FF"></span><span style="font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.3em;color:#C9CDD3;white-space:nowrap">SEGURANÇA E TRANSPARÊNCIA</span></div>
+        <h1 style="margin:0;max-width:16ch;font:300 clamp(42px,6vw,88px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#FFFFFF;text-wrap:balance">O que sustenta a condição que você contrata.</h1>
+      </div>
+      <div style="grid-column:9 / span 4;min-width:0"><p style="margin:0;font:400 15px/1.7 'Schibsted Grotesk',sans-serif;color:#969CA5;text-wrap:pretty">Uma condição diferenciada sem contrato, sem prazo e sem registro é só uma promessa. Esta página descreve o que existe por trás de cada contratação.</p></div>
+    </div>
+  </section>
+
+  <section style="position:relative;min-height:clamp(320px,54vh,600px);overflow:hidden;background:#050505">
+    <div style="position:absolute;inset:0"><image-slot id="seg-break" src="uploads/seg-break.webp" shape="rect" fit="cover" placeholder="TERMINAL / ARQUITETURA AEROPORTUÁRIA À NOITE · 2560×1400"></image-slot></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(5,5,5,.9) 0%,rgba(5,5,5,.55) 50%,rgba(5,5,5,.25) 100%)"></div>
+    <div style="position:relative;min-height:100%;max-width:1560px;margin:0 auto;padding:clamp(110px,14vh,170px) clamp(20px,4vw,64px) clamp(56px,7vw,96px);display:flex;align-items:center;pointer-events:none">
+      <h2 style="margin:0;max-width:18ch;font:300 clamp(24px,3.4vw,50px)/1.1 'Schibsted Grotesk',sans-serif;letter-spacing:-.038em;color:#FFFFFF;text-wrap:balance">Tecnologia para viajar.<br><span style="color:#C9CDD3">Processo para confiar.</span></h2>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#F4F4F1;color:#050505;padding:clamp(80px,9vw,150px) clamp(20px,4vw,64px)">
+    <div data-cols="3" data-div="l" style="max-width:1560px;margin:0 auto;display:grid;border-top:1px solid rgba(5,5,5,.16)">
+      <sc-for list="{{ pilares }}" as="p" hint-placeholder-count="9">
+        <div style="padding:clamp(30px,3.2vw,48px) clamp(24px,2.4vw,40px) clamp(30px,3.2vw,48px) 0;border-right:1px solid rgba(5,5,5,.1);border-bottom:1px solid rgba(5,5,5,.1)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:32px"><span style="width:7px;height:7px;border-radius:2px;background:#5574FF"></span><span style="font:400 10px/1 'IBM Plex Mono',monospace;letter-spacing:.2em;color:#C9CDD3">{{ p.n }}</span></div>
+          <h2 style="margin:0 0 14px;font:400 15px/1.2 'Schibsted Grotesk',sans-serif;letter-spacing:.08em;color:#050505">{{ p.t }}</h2>
+          <p style="margin:0;max-width:34ch;font:400 13.5px/1.75 'Schibsted Grotesk',sans-serif;color:#5B6069;text-wrap:pretty">{{ p.d }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#050505;padding:clamp(80px,9vw,150px) clamp(20px,4vw,64px)">
+    <div data-g12="1" style="max-width:1560px;margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(28px,3vw,60px);align-items:start">
+      <div style="grid-column:1 / span 5;min-width:0">
+        <h2 style="margin:0 0 24px;font:300 clamp(28px,3.6vw,50px)/1.06 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#FFFFFF;text-wrap:balance">O que não prometemos.</h2>
+        <p style="margin:0;max-width:40ch;font:400 14.5px/1.75 'Schibsted Grotesk',sans-serif;color:#969CA5;text-wrap:pretty">Ser claro sobre os limites do modelo é parte da mesma transparência que aplicamos ao contrato.</p>
+      </div>
+      <div style="grid-column:7 / span 6;min-width:0;border-top:1px solid rgba(255,255,255,.12)">
+        <sc-for list="{{ limites }}" as="l" hint-placeholder-count="5">
+          <div style="display:flex;gap:16px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.08)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{ l.stroke }}" stroke-width="1.6" style="flex:0 0 auto;margin-top:4px"><path d="{{ l.icon }}"></path></svg>
+            <span style="{{ l.style }}">{{ l.t }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="position:relative;background:#ECEDEA;color:#050505;padding:clamp(80px,9vw,150px) clamp(20px,4vw,64px)">
+    <div style="max-width:1560px;margin:0 auto">
+      <h2 style="margin:0 0 clamp(40px,4.4vw,68px);font:300 clamp(28px,3.6vw,50px)/1.06 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#050505">Privacidade e dados</h2>
+      <div data-cols="4" data-div="l" style="display:grid;border-top:1px solid rgba(5,5,5,.16)">
+        <sc-for list="{{ dados }}" as="d" hint-placeholder-count="4">
+          <div style="padding:clamp(28px,3vw,44px) clamp(22px,2.2vw,36px) clamp(28px,3vw,44px) 0;border-right:1px solid rgba(5,5,5,.1)">
+            <div style="font:500 9.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5574FF;margin-bottom:22px;white-space:nowrap">{{ d.k }}</div>
+            <p style="margin:0;font:400 14px/1.75 'Schibsted Grotesk',sans-serif;color:#5B6069;text-wrap:pretty">{{ d.d }}</p>
+          </div>
+        </sc-for>
+      </div>
+      <p style="margin:30px 0 0;max-width:84ch;font:400 11.5px/1.75 'IBM Plex Mono',monospace;color:#969CA5">Esta página descreve o modelo. Certificações, selos e parceiros só serão exibidos quando existirem de fato e forem verificáveis.</p>
+    </div>
+  </section>
+
+  <section style="position:relative;min-height:clamp(380px,66vh,720px);display:flex;align-items:flex-end;overflow:hidden;background:#050505">
+    <div style="position:absolute;inset:0"><image-slot id="seg-cta" src="uploads/seg-cta.webp" shape="rect" fit="cover" placeholder="AERONAVE NA PISTA À NOITE · LUZES · 2560×1400"></image-slot></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,5,.6) 0%,rgba(5,5,5,.3) 40%,rgba(5,5,5,.94) 100%)"></div>
+    <div style="position:relative;width:100%;max-width:1560px;margin:0 auto;padding:0 clamp(20px,4vw,64px) clamp(52px,6vw,96px)">
+      <h2 style="margin:0 0 34px;max-width:18ch;font:300 clamp(28px,4.4vw,66px)/1.03 'Schibsted Grotesk',sans-serif;letter-spacing:-.042em;color:#FFFFFF;text-wrap:balance">Leia as condições antes de contratar. Elas vêm na proposta.</h2>
+      <a href="cotacao.html" style="display:inline-flex;align-items:center;gap:12px;height:54px;padding:0 28px;border-radius:9px;background:#5574FF;color:#FFFFFF;font:500 12px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;white-space:nowrap" style-hover="background:#7C93FF">SOLICITAR COTAÇÃO<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+    </div>
+  </section>
+
+  <dc-import name="Footer" hint-size="100%,700px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const X = 'M18 6 6 18M6 6l12 12', OK = 'M20 6 9 17l-5-5';
+
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      pilares: [
+        ['01', 'CONTRATO DIGITAL', 'Toda contratação possui condições formalizadas: valor, prazo, regras de alteração e cancelamento.'],
+        ['02', 'PRAZO DEFINIDO', 'O prazo máximo de emissão é apresentado antes da contratação e registrado no contrato.'],
+        ['03', 'PAGAMENTO REGISTRADO', 'Histórico e comprovantes disponíveis dentro da plataforma, vinculados ao contrato.'],
+        ['04', 'DOCUMENTOS CENTRALIZADOS', 'Contratos, comprovantes e bilhetes permanecem organizados na sua conta.'],
+        ['05', 'PAINEL EXCLUSIVO', 'Acompanhe as atualizações da sua viagem em um único ambiente, com data e hora.'],
+        ['06', 'ATENDIMENTO CONECTADO', 'O atendimento possui contexto da viagem e do processo contratado.'],
+        ['07', 'OPERAÇÃO MONITORADA', 'Cada viagem entra em uma fila com prazo, prioridade e responsável definidos.'],
+        ['08', 'COMUNICAÇÃO RASTREÁVEL', 'Mudanças relevantes ficam registradas no histórico, não apenas em mensagens avulsas.'],
+        ['09', 'LINGUAGEM SEM PROMESSA', 'Percentuais são apresentados como condição observada ou estimada, nunca como garantia automática.']
+      ].map(p => ({ n: p[0], t: p[1], d: p[2] })),
+      limites: [
+        ['Não prometemos menor preço garantido.', 0],
+        ['Não prometemos percentual fixo de economia.', 0],
+        ['Não prometemos emissão instantânea.', 0],
+        ['Não afirmamos que a inteligência artificial define ou garante preço.', 0],
+        ['Prometemos a condição da sua proposta e o prazo do seu contrato.', 1]
+      ].map(([t, ok]) => ({
+        t: t, icon: ok ? OK : X, stroke: ok ? '#5574FF' : '#5B6069',
+        style: 'font:400 15px/1.6 \'Schibsted Grotesk\',sans-serif;color:' + (ok ? '#FFFFFF' : '#969CA5')
+      })),
+      dados: [
+        { k: 'LGPD', d: 'Dados coletados apenas para cotação, contratação e emissão, com base legal de execução de contrato.' },
+        { k: 'ACESSO', d: 'Documentos e contratos ficam restritos à conta do contratante, com registro de acesso.' },
+        { k: 'RETENÇÃO', d: 'Histórico da contratação mantido pelo prazo legal, disponível para consulta no painel.' },
+        { k: 'SOLICITAÇÕES', d: 'Pedidos de correção ou exclusão são atendidos pelos canais da política de privacidade.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
