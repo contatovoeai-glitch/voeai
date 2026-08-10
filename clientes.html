@@ -104,6 +104,13 @@
     [data-cols="7"] { grid-template-columns:repeat(1,minmax(0,1fr)) !important; }
     [data-cols="7"][data-div] > :nth-child(1n+1) { border-left:0 !important; padding-left:0 !important; }
   }
+  /* Linha de emissão: quatro colunas em 350px colavam a rota na data. */
+  @media (max-width:760px) {
+    [data-emissao] { grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      gap:14px !important; align-items:start !important; }
+    [data-emissao] > :nth-child(1) { grid-column:1 / -1; }
+    [data-emissao] > :nth-child(4) { grid-column:1 / -1; justify-self:start; }
+  }
   /* === fim grade de blocos === */
 </style>
 </helmet>
@@ -152,7 +159,7 @@
       <h2 style="margin:0 0 clamp(32px,3.6vw,52px);font:300 clamp(26px,3.2vw,46px)/1.06 'Schibsted Grotesk',sans-serif;letter-spacing:-.04em;color:#FFFFFF">Emissões recentes</h2>
       <div style="border-top:1px solid rgba(255,255,255,.12)">
         <sc-for list="{{ emissoes }}" as="e" hint-placeholder-count="6">
-          <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto;gap:clamp(14px,2vw,34px);align-items:center;padding:clamp(18px,2vw,26px) 0;border-bottom:1px solid rgba(255,255,255,.08)">
+          <div data-emissao="1" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr) auto;gap:clamp(14px,2vw,34px);align-items:center;padding:clamp(18px,2vw,26px) 0;border-bottom:1px solid rgba(255,255,255,.08)">
             <div style="font:300 clamp(20px,2vw,28px)/1 'Schibsted Grotesk',sans-serif;letter-spacing:-.035em;color:#FFFFFF;white-space:nowrap">{{ e.rota }}</div>
             <div><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:10px;white-space:nowrap">EMBARQUE</div><div style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#C9CDD3;white-space:nowrap">{{ e.data }}</div></div>
             <div><div style="font:500 8.5px/1 'IBM Plex Mono',monospace;letter-spacing:.22em;color:#5B6069;margin-bottom:10px;white-space:nowrap">ECONOMIA</div><div style="font:400 13.5px/1 'Schibsted Grotesk',sans-serif;color:#5574FF">{{ e.eco }}</div></div>

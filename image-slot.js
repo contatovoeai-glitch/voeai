@@ -684,7 +684,13 @@
       });
       // Wheel zoom stays available inside reframe mode as a trackpad nicety —
       // zooms toward the cursor (offset' = cursor·(1-k) + offset·k).
-      this.addEventListener('wheel', (e) => {
+      // PATCH LOCAL (VoeAI): este listener NAO fica sempre registrado. Um
+      // listener de 'wheel' nao-passivo obriga o navegador a esperar o main
+      // thread antes de rolar, mesmo quando o handler so faz `return`. Com 16
+      // slots numa pagina, rolar com o cursor sobre qualquer foto saia do
+      // compositor e engasgava. Agora ele e ligado em _enterReframe e
+      // desligado em _exitReframe. Se o starter for recopiado, refazer isto.
+      this._zoom = (e) => {
         if (!this.hasAttribute('data-reframe')) return;
         e.preventDefault();
         const r = this.getBoundingClientRect();
@@ -699,7 +705,7 @@
         this._view.y = cy * (1 - k) + this._view.y * k;
         this._clampView();
         this._applyView();
-      }, { passive: false });
+      };
     }
 
     connectedCallback() {
@@ -747,6 +753,7 @@
     _enterReframe() {
       if (this.hasAttribute('data-reframe')) return;
       this.setAttribute('data-reframe', '');
+      this.addEventListener('wheel', this._zoom, { passive: false });
       this._signalReframe(true);
       // Best-effort commit when the document unloads mid-reframe (a host
       // navigation racing the enter signal, a manual reload, tab close):
@@ -792,6 +799,7 @@
 
     _exitReframe(commit) {
       if (!this.hasAttribute('data-reframe')) return;
+      this.removeEventListener('wheel', this._zoom);
       if (this._dragUp) this._dragUp();
       this.removeAttribute('data-reframe');
       this.removeAttribute('data-panning');
