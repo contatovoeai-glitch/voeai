@@ -198,7 +198,7 @@
   </header>
 
   <section id="topo" style="position:relative;min-height:94svh;display:flex;align-items:center;padding:120px clamp(20px,4vw,64px) 0;background:#050505;overflow:hidden">
-    <div aria-hidden="true" style="position:absolute;inset:0"><image-slot id="hero-fundo" src="uploads/hero-fundo.webp" shape="rect" fit="cover" placeholder="AERONAVE EM CRUZEIRO À NOITE · FUNDO DO HERO"></image-slot></div>
+    <div aria-hidden="true" style="position:absolute;inset:0"><image-slot id="hero-fundo" priority src="uploads/hero-fundo.webp" shape="rect" fit="cover" placeholder="AERONAVE EM CRUZEIRO À NOITE · FUNDO DO HERO"></image-slot></div>
     <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(5,5,5,.95) 0%,rgba(5,5,5,.82) 38%,rgba(5,5,5,.55) 66%,rgba(5,5,5,.7) 100%)"></div>
     <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,5,.72) 0%,transparent 26%,transparent 62%,#050505 100%)"></div>
     <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:120px 120px;mask-image:radial-gradient(ellipse 70% 60% at 40% 45%,#000 10%,transparent 76%)"></div>
@@ -894,8 +894,8 @@
       </div>
 
       <div data-cols="3" style="display:grid;gap:clamp(24px,3vw,48px);padding:clamp(36px,4vw,56px) 0;border-bottom:1px solid rgba(255,255,255,.1);font:400 12.5px/1.9 'IBM Plex Mono',monospace;color:#5B6069">
-        <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">DADOS DA EMPRESA</div><div>Razão social — a definir</div><div>CNPJ 00.000.000/0001-00</div><div>Endereço — a definir</div></div>
-        <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">CONTATO</div><div>+55 (00) 0000-0000</div><div>contato@voeai.com.br</div></div>
+        <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">DADOS DA EMPRESA</div><div>VoeAI Travel Intelligence LTDA</div><div>CNPJ 32.561.801/0001-12</div><div>R. Olimpio Miranda Junior, 168 — Centro</div><div>CEP 88.301-080 — Itajaí/SC</div></div>
+        <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">CONTATO</div><div>contato@voeai.com.br</div></div>
         <div><div style="color:#3A3F47;letter-spacing:.18em;font-size:9.5px;margin-bottom:14px">REDES</div><div style="display:flex;gap:18px;flex-wrap:wrap"><a href="#topo" style="color:#969CA5;font-size:12.5px" style-hover="color:#FFFFFF">Instagram</a><a href="#topo" style="color:#969CA5;font-size:12.5px" style-hover="color:#FFFFFF">LinkedIn</a><a href="#topo" style="color:#969CA5;font-size:12.5px" style-hover="color:#FFFFFF">YouTube</a></div></div>
       </div>
 
@@ -1018,7 +1018,16 @@ class Component extends DCLogic {
       this._conta('numeros', 'numeros');
       this._conta('oper', 'operacional');
     };
-    window.addEventListener('scroll', this._s, { passive: true });
+    // A pagina inteira e UM componente: cada setState reconstroi todas as
+    // strings de style do template. Ligar isso direto no evento de scroll
+    // fazia o re-render disparar varias vezes por frame. O rAF colapsa a
+    // rajada em no maximo um re-render por frame de pintura.
+    this._raf = 0;
+    this._onScroll = () => {
+      if (this._raf) return;
+      this._raf = requestAnimationFrame(() => { this._raf = 0; this._s(); });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
     // clique fora fecha o calendario; data-cal marca o campo e o popover
     this._fora = e => {
       if (!this.state.cal) return;
@@ -1028,6 +1037,10 @@ class Component extends DCLogic {
     document.addEventListener('click', this._fora);
     this._t0 = Date.now();
     this._tick = setInterval(() => {
+      // O relogio do radar so anima dentro do hero. Fora dele (aba oculta ou
+      // rolagem passou do primeiro viewport) cada tique custava um re-render
+      // da pagina inteira a 8x/s, concorrendo com o decode das fotos.
+      if (document.hidden || this.state.y > window.innerHeight) return;
       const ms = Date.now() - this._t0;
       const v = Math.round(40 + 10 * Math.sin(ms / 2800));
       const vivo = Math.floor(ms / 2600) % VIVO.length;
@@ -1050,7 +1063,7 @@ class Component extends DCLogic {
     };
     requestAnimationFrame(step);
   }
-  componentWillUnmount() { window.removeEventListener('scroll', this._s); document.removeEventListener('click', this._fora); clearInterval(this._tick); }
+  componentWillUnmount() { window.removeEventListener('scroll', this._onScroll); if (this._raf) cancelAnimationFrame(this._raf); document.removeEventListener('click', this._fora); clearInterval(this._tick); }
   renderVals() {
     const on = this.state.y > 40, menu = this.state.menu, pct = this.state.pct, k = this.state.counted;
     const sim = this.state.sim, res = this.state.res, nm = this.state.numeros, vivo = this.state.vivo, op = this.state.oper;
@@ -1225,7 +1238,14 @@ class Component extends DCLogic {
         cell: 'padding:0 16px 0 0;border-left:1px solid ' + (i === 4 ? '#5574FF' : 'rgba(5,5,5,.16)') + ';padding-left:14px;min-height:74px',
         label: 'font:400 15px/1.25 \'Schibsted Grotesk\',sans-serif;letter-spacing:-.015em;color:' + (i === 4 ? '#050505' : '#3A3F47')
       })),
-      hdr: 'position:absolute;inset:0;pointer-events:none;transition:opacity .45s ease;background:rgba(5,5,5,.82);backdrop-filter:blur(24px) saturate(1.3);border-bottom:1px solid rgba(255,255,255,.08);opacity:' + (on || menu ? 1 : 0),
+      // PERF: barra fixa de largura total. Com backdrop-filter o compositor
+      // re-amostra e desfoca TUDO que passa atras dela a cada frame de
+      // rolagem, e o custo dispara justo quando uma foto full-bleed cruza por
+      // baixo. Sobre um fundo ja 82% opaco o desfoque quase nao aparecia, so
+      // custava. Fundo mais solido no lugar.
+      // REVERTER (volta o vidro, volta o custo):
+      // background:rgba(5,5,5,.82);backdrop-filter:blur(24px) saturate(1.3);
+      hdr: 'position:absolute;inset:0;pointer-events:none;transition:opacity .45s ease;background:rgba(5,5,5,.94);border-bottom:1px solid rgba(255,255,255,.08);opacity:' + (on || menu ? 1 : 0),
       toggleMenu: () => this.setState({ menu: !menu }),
       drawer: 'position:relative;overflow:hidden;background:rgba(5,5,5,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,' + (menu ? '.08' : '0') + ');transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .35s ease;max-height:' + (menu ? '420px' : '0px') + ';opacity:' + (menu ? 1 : 0)
     };

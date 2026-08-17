@@ -55,7 +55,9 @@ class Component extends DCLogic {
     const a = this.props.active || '', menu = this.state.menu, on = this.state.on;
     const link = k => 'font:400 13.5px/1 \'Schibsted Grotesk\',sans-serif;color:' + (a === k ? '#FFFFFF' : '#C9CDD3') + ';white-space:nowrap';
     return {
-      hdr: 'position:absolute;inset:0;pointer-events:none;transition:opacity .45s ease;background:rgba(5,5,5,.82);backdrop-filter:blur(24px) saturate(1.3);border-bottom:1px solid rgba(255,255,255,.08);opacity:' + (on || menu ? 1 : 0),
+      // PERF: mesmo motivo do index.html — ver comentario la.
+      // REVERTER: background:rgba(5,5,5,.82);backdrop-filter:blur(24px) saturate(1.3);
+      hdr: 'position:absolute;inset:0;pointer-events:none;transition:opacity .45s ease;background:rgba(5,5,5,.94);border-bottom:1px solid rgba(255,255,255,.08);opacity:' + (on || menu ? 1 : 0),
       nComo: link('como'), nDest: link('destinos'), nEco: link('economia'), nPlat: link('plataforma'), nCli: link('clientes'), nSeg: link('seguranca'),
       toggleMenu: () => this.setState({ menu: !menu }),
       drawer: 'position:relative;overflow:hidden;background:rgba(5,5,5,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,' + (menu ? '.08' : '0') + ');transition:max-height .5s cubic-bezier(.16,1,.3,1),opacity .35s ease;max-height:' + (menu ? '420px' : '0px') + ';opacity:' + (menu ? 1 : 0)

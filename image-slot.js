@@ -501,7 +501,14 @@
       root.innerHTML =
         '<style>' + stylesheet + '</style>' +
         '<div class="frame" part="frame">' +
-        '  <img part="image" alt="" draggable="false" style="display:none">' +
+        // PATCH LOCAL (VoeAI): decoding=async + loading=lazy. Sem eles o
+        // navegador adia o decode ate o primeiro paint e o faz SINCRONO no
+        // main thread — ou seja, no exato frame em que a foto entra na tela,
+        // travando a rolagem. Com 21 slots na home isso somava ~170MB de
+        // bitmap decodificado. Slots acima da dobra levam o atributo
+        // `priority` e voltam a eager/high em _render(). Se o starter for
+        // recopiado, refazer isto.
+        '  <img part="image" alt="" draggable="false" decoding="async" loading="lazy" style="display:none">' +
         '  <div class="empty" part="empty">' + icon +
         '    <div class="cap"></div>' +
         '    <div class="sub">or <u>browse files</u></div></div>' +
@@ -516,7 +523,10 @@
         // (photographer + Unsplash), built per-render in _render().
         '<span class="credit" part="credit"></span>' +
         '<div class="spill" popover="manual" data-dc-edit-transparent>' +
-        '  <img class="ghost" alt="" draggable="false">' +
+        // PATCH LOCAL (VoeAI): lazy tambem no ghost. Ele so aparece em modo
+        // reframe (editor); em producao a .spill fica display:none, entao
+        // lazy evita 21 requisicoes duplicadas no load da home.
+        '  <img class="ghost" alt="" draggable="false" decoding="async" loading="lazy">' +
         '  <div class="handle" data-c="nw"></div><div class="handle" data-c="ne"></div>' +
         '  <div class="handle" data-c="sw"></div><div class="handle" data-c="se"></div>' +
         '</div>' +
@@ -1146,6 +1156,12 @@
           // (the pick path's credit/credit-href setAttributes) need this
           // flag, not complete, to know a load is in flight.
           this._loadPending = true;
+          // PATCH LOCAL (VoeAI): o slot do hero (e qualquer outro marcado
+          // com `priority`) nao pode ser lazy — ele esta acima da dobra e
+          // atrasa-lo custa LCP. Os demais ficam lazy/auto.
+          const eager = this.hasAttribute('priority');
+          this._img.loading = eager ? 'eager' : 'lazy';
+          this._img.fetchPriority = eager ? 'high' : 'auto';
           this._img.src = url;
           this._ghost.src = url;
         } else {
